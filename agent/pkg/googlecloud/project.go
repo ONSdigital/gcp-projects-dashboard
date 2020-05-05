@@ -10,7 +10,7 @@ import (
 )
 
 // CurrentProject returns information about the current project.
-func CurrentProject() cloudresourcemanager.Project {
+func CurrentProject() *cloudresourcemanager.Project {
 	ctx := context.Background()
 
 	client, err := google.DefaultClient(ctx, cloudresourcemanager.CloudPlatformScope)

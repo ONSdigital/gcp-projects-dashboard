@@ -1,11 +1,10 @@
 package main
 
 import (
-	"fmt"
-
 	googlecloud "github.com/ONSdigital/gcp-projects-dashboard/agent/pkg/googlecloud"
+	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
-	fmt.Println(googlecloud.CurrentProject())
+	spew.Dump(googlecloud.CurrentProject())
 }
