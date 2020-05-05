@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	project "github.com/ONSdigital/gcp-projects-dashboard/pkg/googlecloud"
+)
 
 func main() {
-	fmt.Println("Hello World!")
+	fmt.Println(project.CurrentProject())
 }
