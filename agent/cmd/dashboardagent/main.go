@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	project "github.com/ONSdigital/gcp-projects-dashboard/pkg/googlecloud"
+	googlecloud "github.com/ONSdigital/gcp-projects-dashboard/pkg/googlecloud"
 )
 
 func main() {
-	fmt.Println(project.CurrentProject())
+	fmt.Println(googlecloud.CurrentProject())
 }
