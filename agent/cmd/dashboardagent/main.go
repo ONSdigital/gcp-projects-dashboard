@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	googlecloud "github.com/ONSdigital/gcp-projects-dashboard/pkg/googlecloud"
+	googlecloud "github.com/ONSdigital/gcp-projects-dashboard/agent/pkg/googlecloud"
 )
 
 func main() {
