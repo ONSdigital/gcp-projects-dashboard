@@ -1,0 +1,17 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: dashboardagent
+spec:
+  schedule: "0/2 * * * *"
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: dashboard-agent
+          containers:
+          - name: dashboardagent
+            image: eu.gcr.io/census-int-ci/dashboardagent:latest
+            imagePullPolicy: Always
+          restartPolicy: Never
