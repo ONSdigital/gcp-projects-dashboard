@@ -23,19 +23,29 @@ func main() {
 		CreateTime: project.CreateTime}
 
 	clusterJSON := response.Cluster{
-		Name:                  cluster.Name,
-		Description:           cluster.Description,
-		CreateTime:            cluster.CreateTime,
-		InitialClusterVersion: cluster.InitialClusterVersion,
-		CurrentMasterVersion:  cluster.CurrentMasterVersion,
-		CurrentNodeVersion:    cluster.CurrentNodeVersion,
-		InitialNodeCount:      cluster.InitialNodeCount,
-		CurrentNodeCount:      cluster.CurrentNodeCount,
-		MaximumPodsPerNode:    cluster.DefaultMaxPodsConstraint.MaxPodsPerNode,
-		LoggingService:        cluster.LoggingService,
-		MonitoringService:     cluster.MonitoringService,
-		DatabaseEncryption:    cluster.DatabaseEncryption.State,
-		DatabaseEncryptionKey: cluster.DatabaseEncryption.KeyName}
+		Name:                   cluster.Name,
+		Description:            cluster.Description,
+		CreateTime:             cluster.CreateTime,
+		InitialClusterVersion:  cluster.InitialClusterVersion,
+		CurrentMasterVersion:   cluster.CurrentMasterVersion,
+		CurrentNodeVersion:     cluster.CurrentNodeVersion,
+		InitialNodeCount:       cluster.InitialNodeCount,
+		CurrentNodeCount:       cluster.CurrentNodeCount,
+		MaximumPodsPerNode:     cluster.DefaultMaxPodsConstraint.MaxPodsPerNode,
+		ShieldedNodes:          cluster.ShieldedNodes.Enabled,
+		LoggingService:         cluster.LoggingService,
+		MonitoringService:      cluster.MonitoringService,
+		DatabaseEncryption:     cluster.DatabaseEncryption.State,
+		DatabaseEncryptionKey:  cluster.DatabaseEncryption.KeyName,
+		Endpoint:               cluster.Endpoint,
+		Location:               cluster.Location,
+		Network:                cluster.Network,
+		NodeIPv4CIDRSize:       cluster.NodeIpv4CidrSize,
+		ServicesIPv4CIDR:       cluster.ServicesIpv4Cidr,
+		Status:                 cluster.Status,
+		StatusMessage:          cluster.StatusMessage,
+		Subnetwork:             cluster.Subnetwork,
+		WorkloadIdentityConfig: cluster.WorkloadIdentityConfig.WorkloadPool}
 
 	responseJSON := response.Response{Project: projectJSON, Cluster: clusterJSON}
 
