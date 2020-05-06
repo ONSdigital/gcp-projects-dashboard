@@ -4,8 +4,8 @@ type (
 
 	// Response represents a JSON response containing GCP project and GKE cluster details.
 	Response struct {
-		Project Project
-		Cluster Cluster
+		Project Project `json:"project"`
+		Cluster Cluster `json:"cluster"`
 	}
 
 	// Project represents a GCP project.
