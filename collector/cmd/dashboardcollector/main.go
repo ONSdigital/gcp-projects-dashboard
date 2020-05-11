@@ -4,19 +4,33 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
+	"strings"
+	"time"
 
 	googlecloud "github.com/ONSdigital/gcp-projects-dashboard/collector/pkg/googlecloud"
 )
 
+const rateLimitPause = 5 * time.Second
+
 func main() {
-	client := googlecloud.NewGKEClient("census-rh-jt-gke")
-	cluster := client.GetFirstCluster()
-	json, err := redactJSON(cluster, "masterAuth")
-	if err != nil {
-		log.Fatal(err)
+	projects := ""
+	if projects = os.Getenv("GCP_PROJECTS"); len(projects) == 0 {
+		log.Fatal("Missing GCP_PROJECTS environment variable")
 	}
 
-	fmt.Printf("%s\n", json)
+	projectNames := strings.Split(projects, "\n")
+	for _, projectName := range projectNames {
+		client := googlecloud.NewGKEClient(projectName)
+		cluster := client.GetFirstCluster()
+		json, err := redactJSON(cluster, "masterAuth")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("%s\n", json)
+		time.Sleep(rateLimitPause)
+	}
 }
 
 func redactJSON(obj interface{}, redactedFields ...string) (string, error) {
