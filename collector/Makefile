@@ -10,8 +10,8 @@ MAC_BUILD_ARCH=$(BUILD)/$(OS_MAC)-$(ARCH)
 
 # Cross-compile the binary for Linux and macOS.
 build: clean
-	CGO_ENABLED=0 GOOS=$(OS_LINUX) GOARCH=$(ARCH) go build -o $(LINUX_BUILD_ARCH)/bin/dashboardapi cmd/dashboardapi/main.go
-	CGO_ENABLED=0 GOOS=$(OS_MAC) GOARCH=$(ARCH) go build -o $(MAC_BUILD_ARCH)/bin/dashboardapi cmd/dashboardapi/main.go
+	CGO_ENABLED=0 GOOS=$(OS_LINUX) GOARCH=$(ARCH) go build -o $(LINUX_BUILD_ARCH)/bin/dashboardcollector cmd/dashboardcollector/main.go
+	CGO_ENABLED=0 GOOS=$(OS_MAC) GOARCH=$(ARCH) go build -o $(MAC_BUILD_ARCH)/bin/dashboardcollector cmd/dashboardcollector/main.go
 
 # Remove the build directory tree.
 clean:

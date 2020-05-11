@@ -39,7 +39,7 @@ func NewGKEClient(projectName string) *GKEClient {
 	}
 }
 
-// GetCluster returns the details of the specified cluster within the project set on the client.
+// GetCluster returns the details of the passed named cluster within the project set on the client.
 func (c GKEClient) GetCluster(clusterName string) *container.Cluster {
 	name := fmt.Sprintf("projects/%s/locations/%s/clusters/%s", c.projectName, london, clusterName)
 	cluster, err := c.projectsLocationsClustersService.Get(name).Context(*c.context).Do()
@@ -48,6 +48,13 @@ func (c GKEClient) GetCluster(clusterName string) *container.Cluster {
 	}
 
 	return cluster
+}
+
+// GetFirstCluster returns the details of the first cluster within the project set on the client.
+func (c GKEClient) GetFirstCluster() *container.Cluster {
+	clusters := c.ListClusters()
+
+	return c.GetCluster(clusters.Clusters[0].Name)
 }
 
 // ListClusters returns a list of GKE clusters within the project set on the client.

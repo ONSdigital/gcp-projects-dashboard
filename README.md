@@ -4,8 +4,7 @@ This repository contains a dashboard that displays useful information from multi
 ## Organisation
 This repository contains the following sub-directories:
 
-* [agent](https://github.com/ONSdigital/gcp-projects-dashboard/tree/master/agent) - Lightweight [Go](https://golang.org/) agent application that runs as a Kubernetes [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) on each GKE cluster that's included in the dashboard
-* [apiserver](https://github.com/ONSdigital/gcp-projects-dashboard/tree/master/apiserver) - Central Go API server that each agent posts collected information to. A [Cloud Firestore](https://cloud.google.com/firestore/) database is used as persistent storage
+* [collector](https://github.com/ONSdigital/gcp-projects-dashboard/tree/master/collector) - [Go](https://golang.org/) application that runs as a Kubernetes [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) and calls the [Kubernetes Engine API](https://cloud.google.com/kubernetes-engine/docs/reference/rest) to collect information about each GKE cluster of interest. A [Cloud Firestore](https://cloud.google.com/firestore/) database is used as persistent storage
 * [dashboard](https://github.com/ONSdigital/gcp-projects-dashboard/tree/master/dashboard) - Dashboard web application that displays the information held in Firestore
 
 ## Building
