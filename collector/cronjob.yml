@@ -14,4 +14,11 @@ spec:
           - name: collector
             image: eu.gcr.io/census-int-ci/gcp-dashboard-collector:latest
             imagePullPolicy: Always
+            env:
+            - name: GCP_PROJECTS
+              valueFrom:
+                configMapKeyRef:
+                  name: gcp-projects-dashboard
+                  key: gcp-projects
           restartPolicy: Never
+
