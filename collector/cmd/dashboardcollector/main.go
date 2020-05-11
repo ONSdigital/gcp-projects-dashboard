@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -14,6 +13,13 @@ import (
 const rateLimitPause = 5 * time.Second
 
 func main() {
+	firestoreProject := ""
+	if firestoreProject = os.Getenv("FIRESTORE_PROJECT"); len(firestoreProject) == 0 {
+		log.Fatal("Missing FIRESTORE_PROJECT environment variable")
+	}
+
+	firestoreClient := googlecloud.NewFirestoreClient(firestoreProject)
+
 	projects := ""
 	if projects = os.Getenv("GCP_PROJECTS"); len(projects) == 0 {
 		log.Fatal("Missing GCP_PROJECTS environment variable")
@@ -23,36 +29,32 @@ func main() {
 	for _, projectName := range projectNames {
 		client := googlecloud.NewGKEClient(projectName)
 		cluster := client.GetFirstCluster()
-		json, err := redactJSON(cluster, "masterAuth")
+		clusterDetails, err := redactSensitiveFields(cluster, "masterAuth")
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		fmt.Printf("%s\n", json)
+		err = firestoreClient.SaveDoc(projectName, clusterDetails)
+		if err != nil {
+			log.Fatalf("Failed to save document to Firestore: %v", err)
+		}
+
 		time.Sleep(rateLimitPause)
 	}
 }
 
-func redactJSON(obj interface{}, redactedFields ...string) (string, error) {
-	redactedJSON, err := json.Marshal(obj)
+func redactSensitiveFields(obj interface{}, redactedFields ...string) (map[string]interface{}, error) {
+	jsonString, err := json.Marshal(obj)
 	if err != nil {
-		return "", err
-	}
-
-	if len(redactedFields) == 0 {
-		return string(redactedJSON), nil
+		return nil, err
 	}
 
 	jsonMap := map[string]interface{}{}
-	json.Unmarshal([]byte(string(redactedJSON)), &jsonMap)
+	json.Unmarshal([]byte(string(jsonString)), &jsonMap)
 
 	for _, field := range redactedFields {
 		delete(jsonMap, field)
 	}
 
-	redactedJSON, err = json.Marshal(jsonMap)
-	if err != nil {
-		return "", err
-	}
-	return string(redactedJSON), nil
+	return jsonMap, nil
 }

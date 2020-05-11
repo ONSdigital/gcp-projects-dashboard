@@ -3,6 +3,7 @@ module github.com/ONSdigital/gcp-projects-dashboard/collector
 go 1.14
 
 require (
+	cloud.google.com/go/firestore v1.2.0
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/labstack/gommon v0.3.0 // indirect
 	golang.org/x/net v0.0.0-20200505041828-1ed23360d12c
