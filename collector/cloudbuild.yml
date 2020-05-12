@@ -1,6 +1,4 @@
 steps:
-- name: 'alpine'
-  args: ['/usr/bin/sh', 'ls -l']
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: ['build', '--tag', 'eu.gcr.io/ons-gcr/gcp-projects-dashboard-collector', '.']
-# images: ['eu.gcr.io/ons-gcr/gcp-projects-dashboard-collector']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag', 'eu.gcr.io/ons-gcr/gcp-projects-dashboard-collector', '.']
+images: ['eu.gcr.io/ons-gcr/gcp-projects-dashboard-collector']
