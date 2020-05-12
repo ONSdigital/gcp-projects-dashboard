@@ -1,4 +1,4 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag', 'eu.gcr.io/ons-gcr/gcp-projects-dashboard-collector', '/collector']
+  args: ['build', '--tag', 'eu.gcr.io/ons-gcr/gcp-projects-dashboard-collector', './collector']
 images: ['eu.gcr.io/ons-gcr/gcp-projects-dashboard-collector']
