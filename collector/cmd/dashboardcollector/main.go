@@ -27,6 +27,8 @@ func main() {
 
 	projectNames := strings.Split(projects, "\n")
 	for _, projectName := range projectNames {
+		log.Printf("Getting GKE cluster details for %s", projectName)
+
 		client := googlecloud.NewGKEClient(projectName)
 		cluster := client.GetFirstCluster()
 		clusterDetails, err := redactSensitiveFields(cluster, "masterAuth")
