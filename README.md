@@ -8,7 +8,7 @@ This repository contains the following sub-directories:
 * [webapp](https://github.com/ONSdigital/gcp-projects-dashboard/tree/master/webapp) - Dashboard web application that displays the information held in Firestore
 
 ## Building
-For the agent and API server, use `make` to compile binaries for macOS and Linux.
+For the collector, use `make` to compile binaries for macOS and Linux.
 
 ## Copyright
 Copyright (C) 2020 Crown Copyright (Office for National Statistics)
