@@ -13,11 +13,13 @@ import (
 const rateLimitPause = 5 * time.Second
 
 func main() {
+	log.Println("Entered main method")
 	firestoreProject := ""
 	if firestoreProject = os.Getenv("FIRESTORE_PROJECT"); len(firestoreProject) == 0 {
 		log.Fatal("Missing FIRESTORE_PROJECT environment variable")
 	}
 
+	log.Printf("FIRESTORE_PROJECT is %s\n", firestoreProject)
 	firestoreClient := googlecloud.NewFirestoreClient(firestoreProject)
 
 	projects := ""
@@ -25,6 +27,7 @@ func main() {
 		log.Fatal("Missing GCP_PROJECTS environment variable")
 	}
 
+	log.Printf("GCP_PROJECTS is %v\n", projects)
 	projectNames := strings.Split(projects, "\n")
 	for _, projectName := range projectNames {
 		log.Printf("Getting GKE cluster details for %s", projectName)
