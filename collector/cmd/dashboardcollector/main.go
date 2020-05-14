@@ -1,65 +1,7 @@
 package main
 
-import (
-	"encoding/json"
-	"log"
-	"os"
-	"strings"
-	"time"
-
-	googlecloud "github.com/ONSdigital/gcp-projects-dashboard/collector/pkg/googlecloud"
-)
-
-const rateLimitPause = 5 * time.Second
+import "log"
 
 func main() {
-	log.Println("Entered main method")
-	firestoreProject := ""
-	if firestoreProject = os.Getenv("FIRESTORE_PROJECT"); len(firestoreProject) == 0 {
-		log.Fatal("Missing FIRESTORE_PROJECT environment variable")
-	}
-
-	log.Printf("FIRESTORE_PROJECT is %s\n", firestoreProject)
-	firestoreClient := googlecloud.NewFirestoreClient(firestoreProject)
-
-	projects := ""
-	if projects = os.Getenv("GCP_PROJECTS"); len(projects) == 0 {
-		log.Fatal("Missing GCP_PROJECTS environment variable")
-	}
-
-	log.Printf("GCP_PROJECTS is %v\n", projects)
-	projectNames := strings.Split(projects, "\n")
-	for _, projectName := range projectNames {
-		log.Printf("Getting GKE cluster details for %s", projectName)
-
-		client := googlecloud.NewGKEClient(projectName)
-		cluster := client.GetFirstCluster()
-		clusterDetails, err := redactSensitiveFields(cluster, "masterAuth")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		err = firestoreClient.SaveDoc(projectName, clusterDetails)
-		if err != nil {
-			log.Fatalf("Failed to save document to Firestore: %v", err)
-		}
-
-		time.Sleep(rateLimitPause)
-	}
-}
-
-func redactSensitiveFields(obj interface{}, redactedFields ...string) (map[string]interface{}, error) {
-	jsonString, err := json.Marshal(obj)
-	if err != nil {
-		return nil, err
-	}
-
-	jsonMap := map[string]interface{}{}
-	json.Unmarshal([]byte(string(jsonString)), &jsonMap)
-
-	for _, field := range redactedFields {
-		delete(jsonMap, field)
-	}
-
-	return jsonMap, nil
+	log.Println("Hello from gcp-projects-dashboard")
 }
