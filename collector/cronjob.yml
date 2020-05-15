@@ -12,7 +12,7 @@ spec:
           serviceAccountName: dashboard-agent
           containers:
           - name: collector
-            image: eu.gcr.io/census-int-ci/gcp-dashboard-collector:latest
+            image: eu.gcr.io/ons-gcr/gcp-projects-dashboard-collector:latest
             imagePullPolicy: Always
             env:
             - name: FIRESTORE_PROJECT
