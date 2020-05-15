@@ -53,8 +53,11 @@ func (c GKEClient) GetCluster(clusterName string) *container.Cluster {
 // GetFirstCluster returns the details of the first cluster within the project set on the client.
 func (c GKEClient) GetFirstCluster() *container.Cluster {
 	clusters := c.ListClusters()
+	if clusters != nil && len(clusters.Clusters) > 0 {
+		return c.GetCluster(clusters.Clusters[0].Name)
+	}
 
-	return c.GetCluster(clusters.Clusters[0].Name)
+	return nil
 }
 
 // ListClusters returns a list of GKE clusters within the project set on the client.

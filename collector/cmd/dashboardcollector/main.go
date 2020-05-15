@@ -32,17 +32,20 @@ func main() {
 
 		client := googlecloud.NewGKEClient(projectName)
 		cluster := client.GetFirstCluster()
-		clusterDetails, err := redactSensitiveFields(cluster, "masterAuth")
-		if err != nil {
-			log.Fatal(err)
-		}
 
-		err = firestoreClient.SaveDoc(projectName, clusterDetails)
-		if err != nil {
-			log.Fatalf("Failed to save document to Firestore: %v", err)
-		}
+		if cluster != nil {
+			clusterDetails, err := redactSensitiveFields(cluster, "masterAuth")
+			if err != nil {
+				log.Fatal(err)
+			}
 
-		time.Sleep(rateLimitPause)
+			err = firestoreClient.SaveDoc(projectName, clusterDetails)
+			if err != nil {
+				log.Fatalf("Failed to save document to Firestore: %v", err)
+			}
+
+			time.Sleep(rateLimitPause)
+		}
 	}
 }
 
