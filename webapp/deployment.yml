@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gcp-projects-dashboard-webapp
+  labels:
+    app: gcp-projects-dashboard-webapp
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: http-server
+  selector:
+    app: gcp-projects-dashboard-webapp
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gcp-projects-dashboard-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gcp-projects-dashboard-webapp
+  template:
+    metadata:
+      labels:
+        app: gcp-projects-dashboard-webapp
+    spec:
+      serviceAccountName: dashboard-webapp
+      containers:
+      - name: webapp
+        image: eu.gcr.io/census-int-ci/gcp-projects-dashboard-webapp:latest
+        imagePullPolicy: Always
+        env:
+        - name: FIRESTORE_PROJECT
+          value: "census-rh-jt-gke"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        ports:
+        - name: http-server
+          containerPort: 3000
