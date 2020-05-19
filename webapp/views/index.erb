@@ -25,8 +25,7 @@
     </tr>
   </thead>
   <tbody>
-  <% projects.each_with_index do |project, i| %>
-  <% cluster = project.get[:cluster] %>
+  <% projects.each_with_index do |project, i| cluster = project.get[:cluster] %>
     <tr class="<%= i.even? ? 'even' : 'odd' %>">
       <td class="project"><%= h project.document_id %></td>
       <td><%= h project.get[:updated] %></td>
@@ -46,7 +45,6 @@
       <td><%= h cluster[:defaultMaxPodsConstraint][:maxPodsPerNode].to_i %></td>
       <td><%= h cluster[:status].capitalize %></td>
     </tr>
-  <% end %>
   <% end %>
   </tbody>
 </table>
