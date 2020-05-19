@@ -29,7 +29,7 @@
   <tbody>
   <% projects.each_with_index do |project, i| %>
     <tr class="<%= i.even? ? 'even' : 'odd' %>">
-      <td><%= project.class %>
+      <td><%= project.public_methods.sort %>
     </tr>
   <% end %>
   </tbody>
