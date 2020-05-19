@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require 'logger'
 require 'sinatra'
 require 'google/cloud/firestore'
 
 helpers do
   def d(text)
-    Time.parse(text).utc.strftime('%A %d %b %Y %H:%M UTC')
+    Time.parse(text).utc.strftime('%A %d %b %Y %H:%M:%S UTC')
   end
 
   def h(text)
@@ -16,8 +15,6 @@ end
 
 before do
   headers 'Content-Type' => 'text/html; charset=utf-8'
-  user_header = request.env['HTTP_X_GOOG_AUTHENTICATED_USER_EMAIL']
-  @user = user_header.partition('accounts.google.com:').last unless user_header.nil?
 end
 
 get '/?' do
