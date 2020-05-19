@@ -31,7 +31,7 @@
     <tr class="<%= i.even? ? 'even' : 'odd' %>">
       <td class="project"><%= h project.document_id %></td>
       <td><%= h project.get[:updated] %></td>
-      <td><%= project.get[:cluster].public_methods.sort %></td>
+      <td><%= project.get[:cluster].keys.sort %></td>
     </tr>
   <% end %>
   </tbody>
