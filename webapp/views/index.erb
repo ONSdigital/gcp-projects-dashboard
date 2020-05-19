@@ -1,1 +1,46 @@
-<p>index</p>
+<table>
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Created</th>
+      <th>Location</th>
+      <th>Master Version</th>
+      <th>Nodes</th>
+      <th>Private Nodes</th>
+      <th>Node Version</th>
+      <th>Machine Type</th>
+      <th>Disk Size</th>
+      <th>Disk Type</th>
+      <th>Image Type</th>
+      <th>Shielded Nodes</th>
+      <th>Secure Boot</th>
+      <th>Max Pods/Node</th>
+      <th>Endpoint</th>
+      <th>Status</th>
+      <th>Information Updated</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% projects.each_with_index do |project, i| %>
+    <tr class="<%= i.even? ? 'even' : 'odd ' %>">
+      <td class="project"><%= h project.document_id %></td>
+      <td><%= d project.get[:cluster][:createTime] %></td>
+      <td><%= h project.get[:cluster][:location] %></td>
+      <td><%= h project.get[:cluster][:currentMasterVersion] %></td>
+      <td><%= h project.get[:cluster][:currentNodeCount].to_i %></td>
+      <td><% if project.get[:cluster][:privateClusterConfig][:enablePrivateNodes] %>✅<% else %>❌<% end %></td>
+      <td><%= h project.get[:cluster][:currentNodeVersion] %></td>
+      <td><%= h project.get[:cluster][:nodeConfig][:machineType] %></td>
+      <td><%= h project.get[:cluster][:nodeConfig][:diskSizeGb].to_i %> GB</td>
+      <td><%= h project.get[:cluster][:nodeConfig][:diskType] %></td>
+      <td><%= h project.get[:cluster][:nodeConfig][:imageType] %></td>
+      <td><% if project.get[:cluster][:shieldedNodes][:enabled] %>✅<% else %>❌<% end %></td>
+      <td><% if project.get[:cluster][:nodeConfig][:shieldedInstanceConfig][:enableSecureBoot] %>✅<% else %>❌<% end %></td>
+      <td><%= h project.get[:cluster][:defaultMaxPodsConstraint][:maxPodsPerNode].to_i %></td>
+      <td><%= h project.get[:cluster][:endpoint] %></td>
+      <td><%= h project.get[:cluster][:status] %></td>
+      <td><%= h project.get[:updated] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

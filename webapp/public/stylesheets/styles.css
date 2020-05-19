@@ -13,3 +13,46 @@ h1 {
 h2 {
   font-size: 140%;
 }
+
+table {
+  background-color: #000;
+  border: 2px solid #000;
+  border-collapse: separate; /* Needed to get the rounded corners to appear. */
+  border-spacing: 1px;
+  border-radius: 6px;
+  font-size: 80%;  
+}
+
+thead {
+  color: #fff;
+}
+
+tbody th {
+  color: #000;
+}
+
+th {
+  font-weight: bold;
+  text-align: left;
+}
+
+th, td {
+  padding: 5px;
+  vertical-align: top;
+}
+
+td {
+  background-color: #fff;
+}
+
+.even {
+  background-color: #fff;
+}
+
+.odd {
+  background-color: #ccc;
+}
+
+.project {
+  font-weight: bold;
+}
