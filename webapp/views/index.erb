@@ -35,7 +35,7 @@
       <td><% if project.get[:cluster][:masterAuthorizedNetworksConfig][:cidrBlocks] %><% project.get[:cluster][:masterAuthorizedNetworksConfig][:cidrBlocks].each do |cidr_block| %><%= h cidr_block[:cidrBlock] %> (<%= h cidr_block[:displayName] %>)<br><% end %><% end %></td>
       <td><%= h project.get[:cluster][:databaseEncryption][:state].capitalize %></td>
       <td><%= h project.get[:cluster][:maintenancePolicy][:window][:dailyMaintenanceWindow][:startTime] %></td>
-      <td><% if project.get[:cluster][:currentNodeCount].nil? %>0<% else %><%= h project.get[:cluster][:currentNodeCount].to_i %></td>
+      <td><% if project.get[:cluster][:currentNodeCount].nil? %>0<% else %><%= h project.get[:cluster][:currentNodeCount].to_i %><% end %></td>
       <td><%= h project.get[:cluster][:currentNodeVersion] %></td>
       <td><%= h project.get[:cluster][:nodeConfig][:machineType] %></td>
       <td><%= h project.get[:cluster][:nodeConfig][:diskSizeGb].to_i %> GB</td>
