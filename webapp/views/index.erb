@@ -20,6 +20,8 @@
       <th>Disk Type</th>
       <th>Image Type</th>
       <th>Private Nodes</th>
+      <th>Secure Boot</th>
+      <th>Shielded Nodes</th>
       <th>Max Pods/Node</th>
       <th>Status</th>
     </tr>
@@ -35,13 +37,15 @@
       <td><% if project.get[:cluster][:masterAuthorizedNetworksConfig][:cidrBlocks] %><% project.get[:cluster][:masterAuthorizedNetworksConfig][:cidrBlocks].each do |cidr_block| %><%= h cidr_block[:cidrBlock] %> (<%= h cidr_block[:displayName] %>)<br><% end %><% end %></td>
       <td><%= h project.get[:cluster][:databaseEncryption][:state].capitalize %></td>
       <td><%= h project.get[:cluster][:maintenancePolicy][:window][:dailyMaintenanceWindow][:startTime] %></td>
-      <td><%= h project.get[:cluster][:currentNodeCount].to_i %></td>
+      <td><% if project.get[:cluster][:currentNodeCount].nil? %>0<% else %><%= h project.get[:cluster][:currentNodeCount].to_i %></td>
       <td><%= h project.get[:cluster][:currentNodeVersion] %></td>
       <td><%= h project.get[:cluster][:nodeConfig][:machineType] %></td>
       <td><%= h project.get[:cluster][:nodeConfig][:diskSizeGb].to_i %> GB</td>
       <td><%= h project.get[:cluster][:nodeConfig][:diskType] %></td>
       <td><%= h project.get[:cluster][:nodeConfig][:imageType] %></td>
       <td><% unless project.get[:cluster][:privateClusterConfig][:enablePrivateNodes].nil? %><% if project.get[:cluster][:privateClusterConfig][:enablePrivateNodes] %>✅<% else %>❌<% end %><% end %></td>
+      <td><% unless project.get[:cluster][:nodeConfig][:shieldedInstanceConfig].nil? %><% if project.get[:cluster][:nodeConfig][:shieldedInstanceConfig][:enableSecureBoot] %>✅<% else %>❌<% end %><% end %></td>
+      <td><% unless project.get[:cluster][:shieldedNodes].nil? %><% if project.get[:cluster][:shieldedNodes][:enabled] %>✅<% else %>❌<% end %><% end %></td>
       <td><%= h project.get[:cluster][:defaultMaxPodsConstraint][:maxPodsPerNode].to_i %></td>
       <td><%= h project.get[:cluster][:status].capitalize %></td>
     </tr>
