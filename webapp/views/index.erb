@@ -45,7 +45,7 @@
       <td><%= h project.get[:cluster][:nodeConfig][:imageType] %></td>
       <td><% if project.get[:cluster][:privateClusterConfig][:enablePrivateNodes] %>✅<% else %>❌<% end %></td>
       <td><% if project.get[:cluster][:nodeConfig][:shieldedInstanceConfig][:enableSecureBoot] %>✅<% else %>❌<% end %></td>
-      <td><% if project.get[:cluster][:shieldedNodes][:enabled] %>✅<% else %>❌<% end %></td>
+      <td><% if project.get[:cluster][:shieldedNodes] %><% if project.get[:cluster][:shieldedNodes][:enabled] %>✅<% else %>❌<% end %><% end %></td>
       <td><%= h project.get[:cluster][:defaultMaxPodsConstraint][:maxPodsPerNode].to_i %></td>
       <td><%= h project.get[:cluster][:status].capitalize %></td>
     </tr>
