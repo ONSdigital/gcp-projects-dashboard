@@ -27,3 +27,7 @@ get '/?' do
 
   erb :index, locals: { title: 'GCP Projects Dashboard', projects: projects }
 end
+
+get '/health?' do
+  halt 200
+end
