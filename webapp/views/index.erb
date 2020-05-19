@@ -29,7 +29,9 @@
   <tbody>
   <% projects.each_with_index do |project, i| %>
     <tr class="<%= i.even? ? 'even' : 'odd' %>">
-      <td><%= project.public_methods.sort %>
+      <td class="project"><%= h project.document_id %></td>
+      <td><%= h project.get[:updated] %></td>
+      <td><%= d project.get[:cluster].public_methods.sort %></td>
     </tr>
   <% end %>
   </tbody>
