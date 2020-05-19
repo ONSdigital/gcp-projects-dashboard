@@ -22,6 +22,7 @@ get '/?' do
   Google::Cloud::Firestore.configure { |config| config.project_id = firestore_project }
   firestore_client = Google::Cloud::Firestore.new
   projects = firestore_client.col('gcp-projects-dashboard').list_documents
+  puts projects.size
 
   erb :index, locals: { title: 'GCP Projects Dashboard', projects: projects }
 end
