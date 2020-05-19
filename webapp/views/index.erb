@@ -19,9 +19,6 @@
       <th>Disk Size</th>
       <th>Disk Type</th>
       <th>Image Type</th>
-      <th>Private Nodes</th>
-      <th>Secure Boot</th>
-      <th>Shielded Nodes</th>
       <th>Max Pods/Node</th>
       <th>Status</th>
     </tr>
@@ -43,9 +40,6 @@
       <td><%= h project.get[:cluster][:nodeConfig][:diskSizeGb].to_i %> GB</td>
       <td><%= h project.get[:cluster][:nodeConfig][:diskType] %></td>
       <td><%= h project.get[:cluster][:nodeConfig][:imageType] %></td>
-      <td><% unless project.get[:cluster][:privateClusterConfig][:enablePrivateNodes].nil? %><% if project.get[:cluster][:privateClusterConfig][:enablePrivateNodes] %>✅<% else %>❌<% end %><% end %></td>
-      <td><% unless project.get[:cluster][:nodeConfig][:shieldedInstanceConfig].nil? %><% if project.get[:cluster][:nodeConfig][:shieldedInstanceConfig][:enableSecureBoot] %>✅<% else %>❌<% end %><% end %></td>
-      <td><% unless project.get[:cluster][:shieldedNodes].nil? %><% if project.get[:cluster][:shieldedNodes][:enabled] %>✅<% else %>❌<% end %><% end %></td>
       <td><%= h project.get[:cluster][:defaultMaxPodsConstraint][:maxPodsPerNode].to_i %></td>
       <td><%= h project.get[:cluster][:status].capitalize %></td>
     </tr>
