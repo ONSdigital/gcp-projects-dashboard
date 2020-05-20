@@ -10,5 +10,15 @@ This repository contains the following sub-directories:
 ## Building
 For the collector, use `make` to compile binaries for macOS and Linux.
 
+## IAM Roles
+The following [GCP IAM roles](https://cloud.google.com/iam/docs/understanding-roles) are required to run this software:
+
+| Component | IAM Role                        |
+|-----------|---------------------------------|
+| collector | `roles/browser`                 |
+|           | `roles/container.clusterViewer` |
+|           | `roles/datastore.user`          |
+| webapp    | `roles/datastore.user`          |
+
 ## Copyright
 Copyright (C) 2020 Crown Copyright (Office for National Statistics)

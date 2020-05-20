@@ -8,16 +8,40 @@
       <th></th>
       <th>Retrieved</th>
       <th>Created</th>
+      <th>Location</th>
+      <th>Master Version</th>
+      <th>Master Authorised Networks</th>
+      <th>Config Database (etcd)</th>
+      <th>Maintenance Window</th>
       <th>Nodes</th>
+      <th>Node Version</th>
+      <th>Machine Type</th>
+      <th>Disk Size</th>
+      <th>Disk Type</th>
+      <th>Image Type</th>
+      <th>Max Pods/Node</th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody>
   <% projects.each_with_index do |project, i| cluster = project.get[:cluster] %>
-    <tr class="<%= i.even? ? 'even' : 'odd' %>">
+     <tr class="<%= i.even? ? 'even' : 'odd' %>">
       <td class="project"><%= h project.document_id %></td>
       <td><%= h project.get[:updated] %></td>
       <td><%= d cluster[:createTime] %></td>
+      <td><%= h cluster[:location] %></td>
+      <td><%= h cluster[:currentMasterVersion] %></td>
+      <td><% if cluster[:masterAuthorizedNetworksConfig][:cidrBlocks] %><% cluster[:masterAuthorizedNetworksConfig][:cidrBlocks].each do |cidr_block| %><%= h cidr_block[:cidrBlock] %> (<%= h cidr_block[:displayName] %>)<br><% end %><% end %></td>
+      <td><%= h cluster[:databaseEncryption][:state].capitalize %></td>
+      <td><%= h cluster[:maintenancePolicy][:window][:dailyMaintenanceWindow][:startTime] %></td>
       <td><% if cluster.key?(:currentNodeCount) %><%= h cluster[:currentNodeCount].to_i %><% else %>0<% end %></td>
+      <td><%= h cluster[:currentNodeVersion] %></td>
+      <td><%= h cluster[:nodeConfig][:machineType] %></td>
+      <td><%= h cluster[:nodeConfig][:diskSizeGb].to_i %> GB</td>
+      <td><%= h cluster[:nodeConfig][:diskType] %></td>
+      <td><%= h cluster[:nodeConfig][:imageType] %></td>
+      <td><%= h cluster[:defaultMaxPodsConstraint][:maxPodsPerNode].to_i %></td>
+      <td><%= h cluster[:status].capitalize %></td>
     </tr>
   <% end %>
   </tbody>
