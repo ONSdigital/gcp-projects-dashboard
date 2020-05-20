@@ -53,7 +53,7 @@ td {
   background-color: #ddd;
 }
 
-.glyph {
+div, .glyph {
   height: 16px;
   width: 16px;
 }
