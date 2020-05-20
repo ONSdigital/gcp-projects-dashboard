@@ -14,16 +14,11 @@
       <th>Config Database (etcd)</th>
       <th>Maintenance Window</th>
       <th>Nodes</th>
-      <th>Node Version</th>
-      <th>Machine Type</th>
-      <th>Disk Size</th>
-      <th>Disk Type</th>
-      <th>Image Type</th>
       <th>Private Nodes</th>
       <th>Secure Boot</th>
       <th>Shielded Nodes</th>
       <th>Workload Identity</th>
-      <th>Max Pods/Node</th>
+      <th>Node Pools</th>
       <th>Status</th>
       <th>Retrieved</th>
     </tr>
@@ -39,16 +34,47 @@
       <td><%= h cluster.dig(:databaseEncryption, :state).capitalize %></td>
       <td><%= h cluster.dig(:maintenancePolicy, :window, :dailyMaintenanceWindow, :startTime) %></td>
       <td><% if cluster.dig(:currentNodeCount) %><%= h cluster.dig(:currentNodeCount).to_i %><% else %>0<% end %></td>
-      <td><%= h cluster.dig(:currentNodeVersion) %></td>
-      <td><% if cluster.dig(:nodeConfig) %><%= h cluster.dig(:nodeConfig, :machineType) %><% end %></td>
-      <td><% if cluster.dig(:nodeConfig) %><%= h cluster.dig(:nodeConfig, :diskSizeGb).to_i %> GB<% end %></td>
-      <td><% if cluster.dig(:nodeConfig) %><%= h cluster.dig(:nodeConfig, :diskType) %><% end %></td>
-      <td><% if cluster.dig(:nodeConfig) %><%= h cluster.dig(:nodeConfig, :imageType) %><% end %></td>
       <td><% if cluster.dig(:privateClusterConfig, :enablePrivateNodes) %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2C5.136 2 2 5.136 2 9s3.136 7 7 7 7-3.136 7-7-3.136-7-7-7zM7.6 12.5L4.1 9l.987-.987L7.6 10.52l5.313-5.314.987.994-6.3 6.3z" fill="#0F9D58" fill-rule="evenodd"></path></svg></div><% else %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2a7 7 0 1 1 0 14A7 7 0 0 1 9 2zm-1 8h2V5H8v5zm0 3h2v-2H8v2z" fill="#D50000" fill-rule="evenodd"></path></svg></div><% end %></td>
       <td><% if cluster.dig(:nodeConfig, :shieldedInstanceConfig, :enableSecureBoot) %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2C5.136 2 2 5.136 2 9s3.136 7 7 7 7-3.136 7-7-3.136-7-7-7zM7.6 12.5L4.1 9l.987-.987L7.6 10.52l5.313-5.314.987.994-6.3 6.3z" fill="#0F9D58" fill-rule="evenodd"></path></svg></div><% else %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2a7 7 0 1 1 0 14A7 7 0 0 1 9 2zm-1 8h2V5H8v5zm0 3h2v-2H8v2z" fill="#D50000" fill-rule="evenodd"></path></svg></div><% end %></td>
       <td><% if cluster.dig(:shieldedNodes, :enabled) %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2C5.136 2 2 5.136 2 9s3.136 7 7 7 7-3.136 7-7-3.136-7-7-7zM7.6 12.5L4.1 9l.987-.987L7.6 10.52l5.313-5.314.987.994-6.3 6.3z" fill="#0F9D58" fill-rule="evenodd"></path></svg></div><% else %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2a7 7 0 1 1 0 14A7 7 0 0 1 9 2zm-1 8h2V5H8v5zm0 3h2v-2H8v2z" fill="#D50000" fill-rule="evenodd"></path></svg></div><% end %></td>
       <td><% if cluster.dig(:workloadIdentityConfig, :workloadPool) %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2C5.136 2 2 5.136 2 9s3.136 7 7 7 7-3.136 7-7-3.136-7-7-7zM7.6 12.5L4.1 9l.987-.987L7.6 10.52l5.313-5.314.987.994-6.3 6.3z" fill="#0F9D58" fill-rule="evenodd"></path></svg></div><% else %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2a7 7 0 1 1 0 14A7 7 0 0 1 9 2zm-1 8h2V5H8v5zm0 3h2v-2H8v2z" fill="#D50000" fill-rule="evenodd"></path></svg></div><% end %></td>
-      <td><%= h cluster.dig(:defaultMaxPodsConstraint, :maxPodsPerNode).to_i %></td>
+      <td>
+      <% if cluster.dig(:nodePools) %>
+      <% cluster[:nodePools].each do |node_pool| %>
+        <table class="nodepool">
+          <thead>
+            <tr>
+              <th colspan="9"><%= h node_pool[:name] %></th>
+            </tr>
+            <tr>
+              <th>Node Version</th>
+              <th>Machine Type</th>
+              <th>Disk Size</th>
+              <th>Disk Type</th>
+              <th>Image Type</th>
+              <th>Auto-Repair</th>
+              <th>Auto-Upgrade</th>
+              <th>Max Pods/Node</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= h node_pool[:version] %></td>
+              <td><%= h node_pool.dig(:config, :machineType) %></td>
+              <td><%= h node_pool.dig(:config, :diskSizeGb).to_i %> GB</td>
+              <td><%= h node_pool.dig(:config, :diskType) %></td>
+              <td><%= h node_pool.dig(:config, :imageType) %></td>
+              <td><% if node_pool.dig(:management, :autoRepair) %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2C5.136 2 2 5.136 2 9s3.136 7 7 7 7-3.136 7-7-3.136-7-7-7zM7.6 12.5L4.1 9l.987-.987L7.6 10.52l5.313-5.314.987.994-6.3 6.3z" fill="#0F9D58" fill-rule="evenodd"></path></svg></div><% else %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2a7 7 0 1 1 0 14A7 7 0 0 1 9 2zm-1 8h2V5H8v5zm0 3h2v-2H8v2z" fill="#D50000" fill-rule="evenodd"></path></svg></div><% end %></td>
+              <td><% if node_pool.dig(:management, :autoUpgrade) %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2C5.136 2 2 5.136 2 9s3.136 7 7 7 7-3.136 7-7-3.136-7-7-7zM7.6 12.5L4.1 9l.987-.987L7.6 10.52l5.313-5.314.987.994-6.3 6.3z" fill="#0F9D58" fill-rule="evenodd"></path></svg></div><% else %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M9 2a7 7 0 1 1 0 14A7 7 0 0 1 9 2zm-1 8h2V5H8v5zm0 3h2v-2H8v2z" fill="#D50000" fill-rule="evenodd"></path></svg></div><% end %></td>
+              <td><%= h node_pool.dig(:maxPodsConstraint, :maxPodsPerNode).to_i %></td>
+              <td><%= h node_pool[:status].capitalize %></td>
+            </tr>
+          </tbody>
+        </table>
+      <% end %>
+      <% end %>
+      </td>
       <td><%= h cluster.dig(:status).capitalize %></td>
       <td><%= h project.get[:updated] %></td>
     </tr>

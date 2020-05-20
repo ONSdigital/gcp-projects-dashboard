@@ -28,6 +28,16 @@ table {
   font-size: 80%;  
 }
 
+table.nodepool {
+  background-color: #fff;
+  border-color: 1px solid #000;
+  border-collapse: separate; /* Needed to get the rounded corners to appear. */
+  border-spacing: 1px;
+  border-radius: 4px;
+  font-size: 80%;
+  margin-bottom: 8px;
+}
+
 thead {
   color: #fff;
 }
