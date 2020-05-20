@@ -22,6 +22,7 @@
       <th>Private Nodes</th>
       <th>Secure Boot</th>
       <th>Shielded Nodes</th>
+      <th>Workload Identity</th>
       <th>Max Pods/Node</th>
       <th>Status</th>
       <th>Retrieved</th>
@@ -46,6 +47,7 @@
       <td><% if cluster.dig(:privateClusterConfig, :enablePrivateNodes) %><img class="glyph" src="/images/tick.png" alt="Enabled"><% else %><img class="glyph" src="/images/exclamation.png" alt="Disabled"><% end %></td>
       <td><% if cluster.dig(:nodeConfig, :shieldedInstanceConfig, :enableSecureBoot) %><img class="glyph" src="/images/tick.png" alt="Enabled"><% else %><img class="glyph" src="/images/exclamation.png" alt="Disabled"><% end %></td>
       <td><% if cluster.dig(:shieldedNodes, :enabled) %><img class="glyph" src="/images/tick.png" alt="Enabled"><% else %><img class="glyph" src="/images/exclamation.png" alt="Disabled"><% end %></td>
+      <td><% if cluster.dig(:workloadIdentityConfig, :workloadPool) %><img class="glyph" src="/images/tick.png" alt="Enabled"><% else %><img class="glyph" src="/images/exclamation.png" alt="Disabled"><% end %></td>
       <td><%= h cluster.dig(:defaultMaxPodsConstraint, :maxPodsPerNode).to_i %></td>
       <td><%= h cluster.dig(:status).capitalize %></td>
       <td><%= h project.get[:updated] %></td>
