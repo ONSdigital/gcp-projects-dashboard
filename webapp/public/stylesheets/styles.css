@@ -45,11 +45,11 @@ td {
   background-color: #fff;
 }
 
-tr.even {
+.even td {
   background-color: #fff;
 }
 
-tr.odd {
+.odd td {
   background-color: #ccc;
 }
 
@@ -63,5 +63,5 @@ tr.odd {
 }
 
 .uk {
-  height: 16px; /* Let the browser calculate the width */
+  height: 16px; /* Let the browser calculate the width. */
 }
