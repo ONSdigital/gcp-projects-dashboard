@@ -6,7 +6,6 @@
     </tr>
     <tr>
       <th></th>
-      <th>Retrieved</th>
       <th>Created</th>
       <th>Location</th>
       <th>Master Version</th>
@@ -21,13 +20,13 @@
       <th>Image Type</th>
       <th>Max Pods/Node</th>
       <th>Status</th>
+      <th>Retrieved</th>
     </tr>
   </thead>
   <tbody>
   <% projects.each_with_index do |project, i| cluster = project.get[:cluster] %>
      <tr class="<%= i.even? ? 'even' : 'odd' %>">
       <td class="project"><%= h project.document_id %></td>
-      <td><%= h project.get[:updated] %></td>
       <td><%= d cluster[:createTime] %></td>
       <td><%= h cluster[:location] %></td>
       <td><%= h cluster[:currentMasterVersion] %></td>
@@ -42,6 +41,7 @@
       <td><% if cluster.key?(:nodeConfig) %><%= h cluster[:nodeConfig][:imageType] %><% end %></td>
       <td><%= h cluster[:defaultMaxPodsConstraint][:maxPodsPerNode].to_i %></td>
       <td><%= h cluster[:status].capitalize %></td>
+      <td><%= h project.get[:updated] %></td>
     </tr>
   <% end %>
   </tbody>
