@@ -58,10 +58,10 @@ td {
   background-color: #ddd;
 }
 
-.project {
-  font-weight: bold;
+.ip-addresses {
+  font-size: 80%;
 }
 
-.uk {
-  height: 16px; /* Let the browser calculate the width. */
+.project {
+  font-weight: bold;
 }
