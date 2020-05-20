@@ -1,3 +1,4 @@
+<% if projects.any? %>
 <table>
   <thead>
     <tr>
@@ -31,7 +32,7 @@
      <tr class="<%= i.even? ? 'even' : 'odd' %>">
       <td class="project"><%= h project.document_id %></td>
       <td><%= d cluster.dig(:createTime) %></td>
-      <td><% if cluster.dig(:location) != 'europe-west2' %><img class="glyph" src="/images/exclamation.png" alt="Warning"><%= h cluster.dig(:location) %><% else %><img class="uk" src="/images/uk.png" alt=""> London<% end %></td>
+      <td><% if cluster.dig(:location) != 'europe-west2' %><img class="glyph" src="/images/exclamation.png" alt="Warning"><%= h cluster.dig(:location) %><% else %><img class="uk" src="/images/uk.png" alt="London"><% end %></td>
       <td><%= h cluster.dig(:currentMasterVersion) %></td>
       <td><% if cluster.dig(:masterAuthorizedNetworksConfig, :cidrBlocks) %><% cluster[:masterAuthorizedNetworksConfig][:cidrBlocks].each do |cidr_block| %><%= h cidr_block[:cidrBlock] %> (<%= h cidr_block[:displayName] %>)<br><% end %><% end %></td>
       <td><%= h cluster.dig(:databaseEncryption, :state).capitalize %></td>
@@ -52,3 +53,6 @@
   <% end %>
   </tbody>
 </table>
+<% else %>
+<p><img class="glyph" src="/images/exclamation.png" alt="Warning"> Unable to retrieve project details.</p>
+<% end %>
