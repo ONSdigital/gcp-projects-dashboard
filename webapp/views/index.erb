@@ -8,6 +8,7 @@
       <th></th>
       <th>Retrieved</th>
       <th>Created</th>
+      <th>Nodes</th>
     </tr>
   </thead>
   <tbody>
@@ -16,6 +17,7 @@
       <td class="project"><%= h project.document_id %></td>
       <td><%= h project.get[:updated] %></td>
       <td><%= d cluster[:createTime] %></td>
+      <td><% if cluster.key?(:currentNodeCount) %><%= h cluster[:currentNodeCount].to_i %><% else %>0<% end %></td>
     </tr>
   <% end %>
   </tbody>
