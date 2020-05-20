@@ -45,11 +45,11 @@ td {
   background-color: #fff;
 }
 
-.even {
+tr.even {
   background-color: #fff;
 }
 
-.odd {
+tr.odd {
   background-color: #ccc;
 }
 
