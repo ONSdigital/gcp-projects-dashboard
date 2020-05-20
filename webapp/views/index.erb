@@ -47,7 +47,7 @@
       <td><% if cluster.dig(:shieldedNodes, :enabled) %><img class="glyph" src="/images/tick.png" alt="Enabled"><% else %><img class="glyph" src="/images/exclamation.png" alt="Disabled"><% end %></td>
       <td><%= h cluster.dig(:defaultMaxPodsConstraint, :maxPodsPerNode).to_i %></td>
       <td><%= h cluster.dig(:status).capitalize %></td>
-      <td><%= h project.dig(:updated) %></td>
+      <td><%= h project.get[:updated] %></td>
     </tr>
   <% end %>
   </tbody>
