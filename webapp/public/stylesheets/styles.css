@@ -60,6 +60,10 @@ td {
   background-color: #fff;
 }
 
+table.nodepool td {
+  background-color: #fff;
+}
+
 .even td {
   background-color: #fff;
 }
