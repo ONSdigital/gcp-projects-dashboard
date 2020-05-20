@@ -63,5 +63,5 @@ td {
 }
 
 .uk {
-  height: 16px;
+  height: 16px; /* Let the browser calculate the width */
 }
