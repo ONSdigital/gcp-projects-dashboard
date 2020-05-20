@@ -19,6 +19,8 @@
       <th>Disk Type</th>
       <th>Image Type</th>
       <th>Private Nodes</th>
+      <th>Secure Boot</th>
+      <th>Shielded Nodes</th>
       <th>Max Pods/Node</th>
       <th>Status</th>
       <th>Retrieved</th>
@@ -31,7 +33,7 @@
       <td><%= d cluster[:createTime] %></td>
       <td><%= h cluster[:location] %></td>
       <td><%= h cluster[:currentMasterVersion] %></td>
-      <td><% if cluster[:masterAuthorizedNetworksConfig][:cidrBlocks] %><% cluster[:masterAuthorizedNetworksConfig][:cidrBlocks].each do |cidr_block| %><%= h cidr_block[:cidrBlock] %> (<%= h cidr_block[:displayName] %>)<br><% end %><% end %></td>
+      <td><% if cluster.dig(:masterAuthorizedNetworksConfig, :cidrBlocks) %><% cluster[:masterAuthorizedNetworksConfig][:cidrBlocks].each do |cidr_block| %><%= h cidr_block[:cidrBlock] %> (<%= h cidr_block[:displayName] %>)<br><% end %><% end %></td>
       <td><%= h cluster[:databaseEncryption][:state].capitalize %></td>
       <td><%= h cluster[:maintenancePolicy][:window][:dailyMaintenanceWindow][:startTime] %></td>
       <td><% if cluster.dig(:currentNodeCount) %><%= h cluster[:currentNodeCount].to_i %><% else %>0<% end %></td>
@@ -40,7 +42,9 @@
       <td><% if cluster.dig(:nodeConfig) %><%= h cluster[:nodeConfig][:diskSizeGb].to_i %> GB<% end %></td>
       <td><% if cluster.dig(:nodeConfig) %><%= h cluster[:nodeConfig][:diskType] %><% end %></td>
       <td><% if cluster.dig(:nodeConfig) %><%= h cluster[:nodeConfig][:imageType] %><% end %></td>
-      <td><% if cluster.dig(:privateClusterConfig, :enablePrivateNodes) %><img src="/images/tick.png" alt="Enabled"><% else %><img src="/images/exclamation.png" alt="Disabled"><% end %></td>
+      <td><% if cluster.dig(:privateClusterConfig, :enablePrivateNodes) %><img class="glyph" src="/images/tick.png" alt="Enabled"><% else %><img class="glyph" src="/images/exclamation.png" alt="Disabled"><% end %></td>
+      <td><% if cluster.dig(:nodeConfig, :shieldedInstanceConfig, :enableSecureBoot) %><img class="glyph" src="/images/tick.png" alt="Enabled"><% else %><img class="glyph" src="/images/exclamation.png" alt="Disabled"><% end %></td>
+      <td><% if cluster.dig(:shieldedNodes, :enabled) %><img class="glyph" src="/images/tick.png" alt="Enabled"><% else %><img class="glyph" src="/images/exclamation.png" alt="Disabled"><% end %></td>
       <td><%= h cluster[:defaultMaxPodsConstraint][:maxPodsPerNode].to_i %></td>
       <td><%= h cluster[:status].capitalize %></td>
       <td><%= h project.get[:updated] %></td>

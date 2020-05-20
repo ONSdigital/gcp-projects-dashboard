@@ -53,6 +53,11 @@ td {
   background-color: #ccc;
 }
 
+.glyph {
+  height: 24px;
+  width: 24px;
+}
+
 .project {
   font-weight: bold;
 }
