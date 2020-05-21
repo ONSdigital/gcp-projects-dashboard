@@ -21,6 +21,8 @@ get '/?' do
   firestore_project = ENV['FIRESTORE_PROJECT']
   raise 'Missing FIRESTORE_PROJECT environment variable' unless firestore_project
 
+  gcp_organisation = ENV['GCP_ORGANISATION']
+
   Google::Cloud::Firestore.configure { |config| config.project_id = firestore_project }
   firestore_client = Google::Cloud::Firestore.new
   projects = firestore_client.col('gcp-projects-dashboard').list_documents.all
