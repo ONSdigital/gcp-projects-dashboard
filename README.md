@@ -12,7 +12,7 @@ This repository contains the following sub-directories:
 For the collector, use `make` to compile binaries for macOS and Linux.
 
 ## Environment Variables
-foo
+The environment variables below are required:
 
 | Component | Variable               | Purpose                                                                                                |
 |-----------|------------------------|--------------------------------------------------------------------------------------------------------|
