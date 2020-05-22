@@ -36,8 +36,7 @@
       <td><% if cluster.dig(:shieldedNodes, :enabled) %><img src="/svg/tick.svg" alt="Enabled"><% else %><img src="/svg/exclamation.svg" alt="Disabled"><% end %></td>
       <td><% if cluster.dig(:workloadIdentityConfig, :workloadPool) %><img src="/svg/tick.svg" alt="Enabled"><% else %><img src="/svg/exclamation.svg" alt="Disabled"><% end %></td>
       <td>
-      <% if cluster.dig(:nodePools) %>
-      <% cluster[:nodePools].each do |node_pool| %>
+      <% cluster.dig(:nodePools).each do |node_pool| %>
         <table class="nodepool">
           <thead>
             <tr>
@@ -88,7 +87,6 @@
           </tbody>
         </table>
       <% end %> <%# nodePools.each %>
-      <% end %> <%# nodePools %>
       </td>
       <td><%= h cluster.dig(:status).capitalize %></td>
       <td><%= d project.get[:updated] %></td>
