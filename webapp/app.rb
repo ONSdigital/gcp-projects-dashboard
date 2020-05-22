@@ -5,7 +5,7 @@ require 'google/cloud/firestore'
 
 helpers do
   def d(text)
-    Time.parse(text).utc.strftime('%A %d %b %Y %H:%M:%S UTC')
+    Time.parse(text).utc.strftime('%d/%m/%Y %H:%M')
   end
 
   def h(text)

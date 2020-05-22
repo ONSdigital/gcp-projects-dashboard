@@ -22,7 +22,7 @@ a:active {
 }
 
 h1 {
-  font-size: 240%;
+  font-size: 200%;
   text-transform: uppercase;
 }
   
@@ -41,7 +41,7 @@ table {
   border-collapse: separate; /* Needed to get the rounded corners to appear. */
   border-spacing: 1px;
   border-radius: 6px;
-  font-size: 80%;  
+  font-size: 78%;  
 }
 
 table.nodepool {
