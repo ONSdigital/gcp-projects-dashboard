@@ -5,6 +5,22 @@ body {
   margin: 2em 2em 2em;
 }
 
+a:link {
+  color: blue;
+}
+
+a:visited {
+  color: blue;
+}
+
+a:hover {
+  color: red;
+}
+
+a:active {
+  color: blue;
+}
+
 h1 {
   font-size: 240%;
   text-transform: uppercase;
