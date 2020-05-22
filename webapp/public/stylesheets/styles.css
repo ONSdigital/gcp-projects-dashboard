@@ -30,7 +30,7 @@ h2 {
   font-size: 140%;
 }
 
-div {
+img {
   height: 18px;
   width: 18px;
 }
@@ -78,6 +78,16 @@ td {
 
 table.nodepool td {
   background-color: #fff;
+}
+
+#gke-logo {
+  height: 48px;
+  width: 48px;
+}
+
+#ons-logo {
+  height: auto;
+  width: auto;
 }
 
 .even td {
