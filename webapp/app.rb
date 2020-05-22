@@ -21,13 +21,19 @@ get '/?' do
   firestore_project = ENV['FIRESTORE_PROJECT']
   raise 'Missing FIRESTORE_PROJECT environment variable' unless firestore_project
 
+  gcp_console_base_url = ENV['GCP_CONSOLE_BASE_URL']
+  raise 'Missing GCP_CONSOLE_BASE_URL environment variable' unless gcp_console_base_url
+
   gcp_organisation = ENV['GCP_ORGANISATION']
+  raise 'Missing GCP_ORGANISATION environment variable' unless firestore_project
 
   Google::Cloud::Firestore.configure { |config| config.project_id = firestore_project }
   firestore_client = Google::Cloud::Firestore.new
   projects = firestore_client.col('gcp-projects-dashboard').list_documents.all
 
-  erb :index, locals: { title: 'GCP Projects Dashboard', projects: projects }
+  erb :index, locals: { title: "#{gcp_organisation} - GCP Projects Dashboard",
+                        gcp_console_base_url: gcp_console_base_url,
+                        projects: projects }
 end
 
 get '/health?' do

@@ -26,7 +26,7 @@
   <tbody>
   <% projects.each_with_index do |project, i| cluster = project.get[:cluster] %>
      <tr class="<%= i.even? ? 'even' : 'odd' %>">
-      <td class="project"><%= h project.document_id %></td>
+      <td class="project"><a href="<%= gcp_console_base_url %><%= h project.document_id %>"><%= h project.document_id %></a></td>
       <td><%= d cluster.dig(:createTime) %></td>
       <td><% if cluster.dig(:location) != 'europe-west2' %><div><svg width="100%" height="100%" viewBox="0 0 18 18" fit="" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M15.3 15.2c.7 0 1-.5.7-1.2L9.9 3.4c-.4-.7-1-.7-1.4 0L2.4 14c-.4.7-.1 1.2.7 1.2h12.2zm-5.4-2.1H8.5v-1.4h1.4v1.4zm0-2.7H8.5V7.7h1.4v2.7z" fill="#F2A600"></path></svg></div><%= h cluster.dig(:location) %><% else %>London<% end %></td>
       <td><%= h cluster.dig(:currentMasterVersion) %></td>

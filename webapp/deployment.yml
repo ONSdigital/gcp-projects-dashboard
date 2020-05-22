@@ -35,6 +35,16 @@ spec:
         env:
         - name: FIRESTORE_PROJECT
           value: "census-rh-jt-gke"
+        - name: GCP_CONSOLE_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: gcp-console-base-url
+              name: gcp-projects-dashboard
+        - name: GCP_ORGANISATION
+          valueFrom:
+            configMapKeyRef:
+              key: gcp-organisation
+              name: gcp-projects-dashboard
         resources:
           requests:
             cpu: 100m
