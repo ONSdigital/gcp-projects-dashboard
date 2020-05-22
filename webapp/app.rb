@@ -25,7 +25,7 @@ get '/?' do
   raise 'Missing GCP_CONSOLE_BASE_URL environment variable' unless gcp_console_base_url
 
   gcp_organisation = ENV['GCP_ORGANISATION']
-  raise 'Missing GCP_ORGANISATION environment variable' unless firestore_project
+  raise 'Missing GCP_ORGANISATION environment variable' unless gcp_organisation
 
   Google::Cloud::Firestore.configure { |config| config.project_id = firestore_project }
   firestore_client = Google::Cloud::Firestore.new
