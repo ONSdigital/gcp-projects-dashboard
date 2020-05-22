@@ -11,6 +11,17 @@ This repository contains the following sub-directories:
 ## Building
 For the collector, use `make` to compile binaries for macOS and Linux.
 
+## Environment Variables
+foo
+
+| Component | Variable               | Purpose                                                                                                |
+|-----------|------------------------|--------------------------------------------------------------------------------------------------------|
+| collector | `FIRESTORE_PROJECT`    | Name of the GCP project containing the Firestore project.                                              |
+|           | `GCP_PROJECTS`         | List of GCP projects containing the GKE clusters to collect information for (one cluster per project). |
+| webapp    | `FIRESTORE_PROJECT`    | Name of the GCP project containing the Firestore project.                                              |
+|           | `GCP_CONSOLE_BASE_URL` | Base URL to use for the project hyperlinks. The project name is appended to this URL.                  |
+|           | `GCP_ORGANISATION`     | Name of the GCP organisation the deployed dashboard is reporting against. Displayed in the heading.    |
+
 ## IAM Roles
 The following [GCP IAM roles](https://cloud.google.com/iam/docs/understanding-roles) are required to run this software:
 
