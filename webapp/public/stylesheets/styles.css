@@ -37,7 +37,6 @@ img {
 
 p {
   font-size: 80%;
-  font-style: italic;
 }
 
 table {
@@ -95,6 +94,14 @@ table.nodepool td {
   width: auto;
 }
 
+.all-projects, .bookmarked-projects {
+  font-weight: bold;
+}
+
+.bookmark {
+  cursor: pointer;
+}
+
 .even td {
   background-color: #fff;
 }
@@ -109,4 +116,9 @@ table.nodepool td {
 
 .project {
   font-weight: bold;
+}
+
+.utc-note {
+  float: right;
+  font-style: italic;
 }
