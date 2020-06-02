@@ -3,6 +3,9 @@
 require 'sinatra'
 require 'google/cloud/firestore'
 
+FIRESTORE_DATA_COLLECTION  = 'gcp-projects-dashboard'
+FIRESTORE_PREFS_COLLECTION = 'gcp-projects-dashboard-preferences'
+
 helpers do
   def d(text)
     Time.parse(text).utc.strftime('%d/%m/%Y %H:%M')
@@ -15,27 +18,41 @@ end
 
 before do
   headers 'Content-Type' => 'text/html; charset=utf-8'
+  @firestore_project = ENV['FIRESTORE_PROJECT']
+  raise 'Missing FIRESTORE_PROJECT environment variable' unless @firestore_project
+
+  user_header = request.env['HTTP_X_GOOG_AUTHENTICATED_USER_EMAIL']
+  @user = user_header.partition('accounts.google.com:').last unless user_header.nil?
 end
 
 get '/?' do
-  firestore_project = ENV['FIRESTORE_PROJECT']
-  raise 'Missing FIRESTORE_PROJECT environment variable' unless firestore_project
-
   gcp_console_base_url = ENV['GCP_CONSOLE_BASE_URL']
   raise 'Missing GCP_CONSOLE_BASE_URL environment variable' unless gcp_console_base_url
 
   gcp_organisation = ENV['GCP_ORGANISATION']
   raise 'Missing GCP_ORGANISATION environment variable' unless gcp_organisation
 
-  Google::Cloud::Firestore.configure { |config| config.project_id = firestore_project }
+  Google::Cloud::Firestore.configure { |config| config.project_id = @firestore_project }
   firestore_client = Google::Cloud::Firestore.new
-  projects = firestore_client.col('gcp-projects-dashboard').list_documents.all
+  projects = firestore_client.col(FIRESTORE_DATA_COLLECTION).list_documents.all
 
   erb :index, locals: { title: "#{gcp_organisation} - GCP Projects Dashboard",
                         gcp_console_base_url: gcp_console_base_url,
-                        projects: projects }
+                        projects: projects,
+                        beta: params[:beta] }
 end
 
 get '/health?' do
   halt 200
+end
+
+post '/bookmark?' do
+  Google::Cloud::Firestore.configure { |config| config.project_id = @firestore_project }
+  firestore_client = Google::Cloud::Firestore.new
+  doc = firestore_client.col(FIRESTORE_PREFS_COLLECTION).doc(@user)
+  bookmarks = []
+  bookmarks = doc.get[:bookmarks] unless doc.get.data.nil?
+  bookmark = params[:bookmark]
+  bookmarks << bookmark unless bookmarks.include?(bookmark)
+  doc.set({ bookmarks: bookmarks })
 end

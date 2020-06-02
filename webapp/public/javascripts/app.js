@@ -1,5 +1,5 @@
 $(function() {
   $(".bookmark").on( "click", function(event) {
-    alert(event.target.id);
+    $.post("/bookmark", { bookmark: event.target.id });
   });
 });
