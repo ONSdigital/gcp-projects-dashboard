@@ -17,6 +17,9 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: gcp-projects-dashboard-webapp
+  labels:
+    keel.sh/policy: force
+    keel.sh/trigger: poll
 spec:
   replicas: 1
   selector:
