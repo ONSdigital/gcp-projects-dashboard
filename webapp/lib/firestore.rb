@@ -24,7 +24,9 @@ class Firestore
 
   def bookmarked_projects(user)
     bookmarks = bookmarks(user)
-    all_projects.collect { |project| project if bookmarks.include?(project.document_id) }
+    bookmarked_projects = []
+    all_projects.each { |project| bookmarked_projects << project if bookmarks.include?(project.document_id) }
+    bookmarked_projects
   end
 
   def bookmarks(user)
