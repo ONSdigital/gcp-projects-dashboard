@@ -50,13 +50,24 @@ get '/health?' do
   halt 200
 end
 
-post '/bookmark?' do
+post '/addbookmark?' do
   Google::Cloud::Firestore.configure { |config| config.project_id = @firestore_project }
   firestore_client = Google::Cloud::Firestore.new
-  doc = firestore_client.col(FIRESTORE_PREFS_COLLECTION).doc(@user)
+  user_prefs = firestore_client.col(FIRESTORE_PREFS_COLLECTION).doc(@user)
   bookmarks = []
-  bookmarks = doc.get[:bookmarks] unless doc.get.data.nil?
+  bookmarks = user_prefs.get[:bookmarks] unless user_prefs.get.data.nil?
   bookmark = params[:bookmark]
   bookmarks << bookmark unless bookmarks.include?(bookmark)
-  doc.set({ bookmarks: bookmarks })
+  user_prefs.set({ bookmarks: bookmarks })
+end
+
+post '/removebookmark?' do
+  Google::Cloud::Firestore.configure { |config| config.project_id = @firestore_project }
+  firestore_client = Google::Cloud::Firestore.new
+  user_prefs = firestore_client.col(FIRESTORE_PREFS_COLLECTION).doc(@user)
+  bookmarks = []
+  bookmarks = user_prefs.get[:bookmarks] unless user_prefs.get.data.nil?
+  bookmark = params[:bookmark]
+  bookmarks.delete(bookmark)
+  user_prefs.set({ bookmarks: bookmarks })
 end
