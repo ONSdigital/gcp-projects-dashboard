@@ -89,6 +89,10 @@ table.nodepool td {
   width: 48px;
 }
 
+#notice {
+  font-size: 120%;
+}
+
 #ons-logo {
   height: auto;
   width: auto;

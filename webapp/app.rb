@@ -46,6 +46,29 @@ get '/?' do
                         bookmarks: bookmarks }
 end
 
+get '/bookmarks?' do
+  gcp_console_base_url = ENV['GCP_CONSOLE_BASE_URL']
+  raise 'Missing GCP_CONSOLE_BASE_URL environment variable' unless gcp_console_base_url
+
+  gcp_organisation = ENV['GCP_ORGANISATION']
+  raise 'Missing GCP_ORGANISATION environment variable' unless gcp_organisation
+
+  Google::Cloud::Firestore.configure { |config| config.project_id = @firestore_project }
+  firestore_client = Google::Cloud::Firestore.new
+  projects = firestore_client.col(FIRESTORE_DATA_COLLECTION).list_documents.all
+
+  user_prefs = firestore_client.col(FIRESTORE_PREFS_COLLECTION).doc(@user)
+  bookmarks = []
+  bookmarks = user_prefs.get[:bookmarks] unless user_prefs.get.data.nil?
+
+  bookmarked_projects = []
+  projects.each { |project| bookmarked_projects << project if bookmarks.include?(project.document_id) }
+
+  erb :bookmarks, locals: { title: "#{gcp_organisation} Bookmarks - GCP Projects Dashboard",
+                            gcp_console_base_url: gcp_console_base_url,
+                            projects: bookmarked_projects }
+end
+
 get '/health?' do
   halt 200
 end
