@@ -4,10 +4,15 @@ require 'sinatra'
 require 'sinatra/partial'
 require 'google/cloud/firestore'
 
-FIRESTORE_DATA_COLLECTION  = 'gcp-projects-dashboard'
-FIRESTORE_PREFS_COLLECTION = 'gcp-projects-dashboard-preferences'
+require_relative 'lib/configuration'
+require_relative 'lib/firestore'
 
 set :partial_template_engine, :erb
+
+config = Configuration.new(ENV)
+set :firestore_project,    config.firestore_project
+set :gcp_console_base_url, config.gcp_console_base_url
+set :gcp_organisation,     config.gcp_organisation
 
 helpers do
   def d(text)
@@ -21,79 +26,36 @@ end
 
 before do
   headers 'Content-Type' => 'text/html; charset=utf-8'
-  @firestore_project = ENV['FIRESTORE_PROJECT']
-  raise 'Missing FIRESTORE_PROJECT environment variable' unless @firestore_project
-
   user_header = request.env['HTTP_X_GOOG_AUTHENTICATED_USER_EMAIL']
   @user = user_header.partition('accounts.google.com:').last unless user_header.nil?
 end
 
 get '/?' do
-  gcp_console_base_url = ENV['GCP_CONSOLE_BASE_URL']
-  raise 'Missing GCP_CONSOLE_BASE_URL environment variable' unless gcp_console_base_url
-
-  gcp_organisation = ENV['GCP_ORGANISATION']
-  raise 'Missing GCP_ORGANISATION environment variable' unless gcp_organisation
-
-  Google::Cloud::Firestore.configure { |config| config.project_id = @firestore_project }
-  firestore_client = Google::Cloud::Firestore.new
-  projects = firestore_client.col(FIRESTORE_DATA_COLLECTION).list_documents.all
-
-  user_prefs = firestore_client.col(FIRESTORE_PREFS_COLLECTION).doc(@user)
-  bookmarks = []
-  bookmarks = user_prefs.get[:bookmarks] unless user_prefs.get.data.nil?
-
-  erb :index, locals: { title: "#{gcp_organisation} - GCP Projects Dashboard",
-                        gcp_console_base_url: gcp_console_base_url,
-                        projects: projects,
-                        bookmarks: bookmarks }
+  firestore = Firestore.new(settings.firestore_project)
+  erb :index, locals: { title: "#{settings.gcp_organisation} - GCP Projects Dashboard",
+                        gcp_console_base_url: settings.gcp_console_base_url,
+                        projects: firestore.all_projects,
+                        bookmarks: firestore.bookmarks(@user) }
 end
 
 get '/bookmarks?' do
-  gcp_console_base_url = ENV['GCP_CONSOLE_BASE_URL']
-  raise 'Missing GCP_CONSOLE_BASE_URL environment variable' unless gcp_console_base_url
-
-  gcp_organisation = ENV['GCP_ORGANISATION']
-  raise 'Missing GCP_ORGANISATION environment variable' unless gcp_organisation
-
-  Google::Cloud::Firestore.configure { |config| config.project_id = @firestore_project }
-  firestore_client = Google::Cloud::Firestore.new
-  projects = firestore_client.col(FIRESTORE_DATA_COLLECTION).list_documents.all
-
-  user_prefs = firestore_client.col(FIRESTORE_PREFS_COLLECTION).doc(@user)
-  bookmarks = []
-  bookmarks = user_prefs.get[:bookmarks] unless user_prefs.get.data.nil?
-
-  bookmarked_projects = []
-  projects.each { |project| bookmarked_projects << project if bookmarks.include?(project.document_id) }
-
-  erb :bookmarks, locals: { title: "#{gcp_organisation} Bookmarks - GCP Projects Dashboard",
-                            gcp_console_base_url: gcp_console_base_url,
-                            projects: bookmarked_projects }
+  firestore = Firestore.new(settings.firestore_project)
+  erb :bookmarks, locals: { title: "#{settings.gcp_organisation} Bookmarks - GCP Projects Dashboard",
+                            gcp_console_base_url: settings.gcp_console_base_url,
+                            projects: firestore.bookmarked_projects(@user) }
 end
 
 get '/health?' do
   halt 200
 end
 
+# The routes below are invoked from AJAX actions.
 post '/addbookmark?' do
-  Google::Cloud::Firestore.configure { |config| config.project_id = @firestore_project }
-  firestore_client = Google::Cloud::Firestore.new
-  user_prefs = firestore_client.col(FIRESTORE_PREFS_COLLECTION).doc(@user)
-  bookmarks = []
-  bookmarks = user_prefs.get[:bookmarks] unless user_prefs.get.data.nil?
-  bookmark = params[:bookmark]
-  bookmarks << bookmark unless bookmarks.include?(bookmark)
-  user_prefs.set({ bookmarks: bookmarks })
+  firestore = Firestore.new(settings.firestore_project)
+  firestore.add_bookmark(@user, params[:bookmark])
 end
 
 post '/removebookmark?' do
-  Google::Cloud::Firestore.configure { |config| config.project_id = @firestore_project }
-  firestore_client = Google::Cloud::Firestore.new
-  user_prefs = firestore_client.col(FIRESTORE_PREFS_COLLECTION).doc(@user)
-  bookmarks = []
-  bookmarks = user_prefs.get[:bookmarks] unless user_prefs.get.data.nil?
-  bookmark = params[:bookmark]
-  bookmarks&.delete(bookmark)
-  user_prefs.set({ bookmarks: bookmarks })
+  firestore = Firestore.new(settings.firestore_project)
+  firestore.remove_bookmark(@user, params[:bookmark])
 end
