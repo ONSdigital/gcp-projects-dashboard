@@ -36,10 +36,14 @@ get '/?' do
   firestore_client = Google::Cloud::Firestore.new
   projects = firestore_client.col(FIRESTORE_DATA_COLLECTION).list_documents.all
 
+  doc = firestore_client.col(FIRESTORE_PREFS_COLLECTION).doc(@user)
+  bookmarks = []
+  bookmarks = doc.get[:bookmarks] unless doc.get.data.nil?
+
   erb :index, locals: { title: "#{gcp_organisation} - GCP Projects Dashboard",
                         gcp_console_base_url: gcp_console_base_url,
                         projects: projects,
-                        beta: params[:beta] }
+                        bookmarks: bookmarks }
 end
 
 get '/health?' do
