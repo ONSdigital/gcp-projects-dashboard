@@ -83,6 +83,8 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.8.1)
       tilt (~> 2.0)
+    sinatra-partial (1.0.1)
+      sinatra (>= 1.4)
     tilt (2.0.10)
     unicode-display_width (1.7.0)
 
@@ -94,6 +96,7 @@ DEPENDENCIES
   puma
   rubocop
   sinatra
+  sinatra-partial
 
 BUNDLED WITH
    2.1.2

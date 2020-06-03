@@ -1,25 +1,7 @@
 <% if projects.any? %>
 <p><span class="all-projects"><a href="/">All Projects</a></span><span class="utc-note">All times are in UTC.</span></p>
 <table>
-  <thead>
-    <tr>
-      <th><img id="gke-logo" src="/svg/gke.svg" alt="Google Kubernetes Engine logo"></th>
-      <th>Master Version</th>
-      <th>Master Authorised Networks</th>
-      <th>Network Policy</th>
-      <th>Pod IP Address Range</th>
-      <th>Config Database (etcd)</th>
-      <th>Maintenance Window</th>
-      <th>Nodes</th>
-      <th>Private Nodes</th>
-      <th>Secure Boot</th>
-      <th>Shielded Nodes</th>
-      <th>Workload Identity</th>
-      <th>Node Pools</th>
-      <th>Status</th>
-      <th>Retrieved</th>
-    </tr>
-  </thead>
+  <%= partial 'partials/thead' %>
   <tbody>
   <% projects.each_with_index do |project, i| cluster = project.get[:cluster] %>
      <tr class="<%= i.even? ? 'even' : 'odd' %>">

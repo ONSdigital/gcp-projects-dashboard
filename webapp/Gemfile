@@ -8,6 +8,7 @@ Encoding.default_internal = Encoding::UTF_8
 gem 'google-cloud-firestore'
 gem 'puma'
 gem 'sinatra'
+gem 'sinatra-partial'
 
 group :development do
   gem 'rubocop'

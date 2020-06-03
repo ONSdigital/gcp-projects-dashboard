@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 require 'sinatra'
+require 'sinatra/partial'
 require 'google/cloud/firestore'
 
 FIRESTORE_DATA_COLLECTION  = 'gcp-projects-dashboard'
 FIRESTORE_PREFS_COLLECTION = 'gcp-projects-dashboard-preferences'
+
+set :partial_template_engine, :erb
 
 helpers do
   def d(text)
