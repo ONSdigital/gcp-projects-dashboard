@@ -68,6 +68,6 @@ post '/removebookmark?' do
   bookmarks = []
   bookmarks = user_prefs.get[:bookmarks] unless user_prefs.get.data.nil?
   bookmark = params[:bookmark]
-  bookmarks.delete(bookmark)
+  bookmarks&.delete(bookmark)
   user_prefs.set({ bookmarks: bookmarks })
 end
