@@ -1,6 +1,6 @@
 <td><%= h cluster.dig(:currentMasterVersion) %></td>
 <td class="ip-addresses"><% if cluster.dig(:masterAuthorizedNetworksConfig, :cidrBlocks) %><% cluster[:masterAuthorizedNetworksConfig][:cidrBlocks].each do |cidr_block| %><%= h cidr_block[:cidrBlock] %><% if cidr_block.dig(:displayName) %> (<%= h cidr_block[:displayName] %>)<% end %><br><% end %><% end %></td>
-<td><% if cluster.dig(:networkPolicy, :enabled) %><img src="/svg/tick.svg" alt="Enabled"><br><%= h cluster.dig(:networkPolicy, :provider).capitalize %><% end %></td>
+<td><% if cluster.dig(:networkPolicy, :enabled) %><%= h cluster.dig(:networkPolicy, :provider).capitalize %><% end %></td>
 <td class="ip-addresses"><%= h cluster.dig(:ipAllocationPolicy, :clusterIpv4CidrBlock) %></td>
 <td><%= h cluster.dig(:databaseEncryption, :state).capitalize %></td>
 <td><%= h cluster.dig(:maintenancePolicy, :window, :dailyMaintenanceWindow, :startTime) %></td>
