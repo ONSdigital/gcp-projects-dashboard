@@ -14,7 +14,7 @@ func main() {
 	}
 
 	project := ""
-	if project = os.Getenv("GCP_PROJECT"); len(project) == 0) {
+	if project = os.Getenv("GCP_PROJECT"); len(project) == 0 {
 		log.Fatal("Missing GCP_PROJECT environment variable")
 	}
 
