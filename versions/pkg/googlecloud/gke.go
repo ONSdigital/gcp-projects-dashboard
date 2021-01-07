@@ -18,8 +18,6 @@ type (
 	}
 )
 
-const london = "europe-west2"
-
 // NewGKEClient instantiates a Google Kubernetes Engine API client.
 func NewGKEClient(projectName string) *GKEClient {
 	ctx := context.Background()
