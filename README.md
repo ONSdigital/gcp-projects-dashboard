@@ -35,6 +35,7 @@ The following [GCP IAM roles](https://cloud.google.com/iam/docs/understanding-ro
 |           | `roles/container.clusterViewer` |
 |           | `roles/datastore.user`          |
 | versions  | `roles/datastore.user`          |
+|           | `roles/container.clusterViewer` |
 | webapp    | `roles/datastore.user`          |
 
 ## Copyright
