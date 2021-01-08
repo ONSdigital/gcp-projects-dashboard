@@ -41,8 +41,9 @@ func NewFirestoreClient(projectName string) *FirestoreClient {
 func (c FirestoreClient) SaveDoc(serverConfig *container.ServerConfig) error {
 	doc := c.client.Collection(firestoreCollection).Doc(london)
 	_, err := doc.Set(*c.context, map[string]interface{}{
-		"versions": serverConfig,
-		"updated":  now(),
+		"validMasterVersions": serverConfig.ValidMasterVersions,
+		"validNodeVersions":   serverConfig.ValidNodeVersions,
+		"updated":             now(),
 	})
 
 	return err
