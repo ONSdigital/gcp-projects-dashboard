@@ -20,6 +20,8 @@ The environment variables below are required:
 |-----------|------------------------|--------------------------------------------------------------------------------------------------------|
 | collector | `FIRESTORE_PROJECT`    | Name of the GCP project containing the Firestore database.                                             |
 |           | `GCP_PROJECTS`         | List of GCP projects containing the GKE clusters to collect information for (one cluster per project). |
+|           | `SLACK_CHANNEL`        | Name of the Slack channel for post expiring GKE master/node version alerts to.                         |
+|           | `SLACK_WEBHOOK`        | Slack webhook for posting expiring GKE master/node version alerts to.                                  |
 | versions  | `FIRESTORE_PROJECT`    | Name of the GCP project containing the Firestore database.                                             |
 |           | `GCP_PROJECT`          | Name of the GCP project to use when invoking the Kubernetes Engine API.                                |
 | webapp    | `FIRESTORE_PROJECT`    | Name of the GCP project containing the Firestore database.                                             |
