@@ -26,6 +26,16 @@ func main() {
 		log.Fatal("Missing GCP_PROJECTS environment variable")
 	}
 
+	slackAlertsChannel := ""
+	if slackAlertsChannel = os.Getenv("SLACK_CHANNEL"); len(slackAlertsChannel) == 0 {
+		log.Fatal("Missing SLACK_CHANNEL environment variable")
+	}
+
+	slackWebHookURL := ""
+	if slackWebHookURL = os.Getenv("SLACK_WEBHOOK"); len(slackWebHookURL) == 0 {
+		log.Fatal("Missing SLACK_WEBHOOK environment variable")
+	}
+
 	projectNames := strings.Split(projects, "\n")
 	for _, projectName := range projectNames {
 		fmt.Printf("Getting GKE cluster details for %s\n", projectName)
