@@ -24,7 +24,8 @@ type (
 	}
 )
 
-const firestoreCollection = "gcp-projects-dashboard"
+const clustersCollection = "gcp-projects-dashboard"
+const versionsCollection = "gcp-projects-dashboard-gke-versions"
 
 // NewFirestoreClient instantiates a new Firestore client for the passed GCP project name.
 func NewFirestoreClient(projectName string) *FirestoreClient {
