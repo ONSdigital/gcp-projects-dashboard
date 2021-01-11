@@ -16,6 +16,12 @@ type (
 		context     *context.Context
 		client      *firestore.Client
 	}
+
+	// GKEVersions represents available GKE version information.
+	GKEVersions struct {
+		MasterVersions []string `firestore:"validMasterVersions"`
+		NodeVersions   []string `firestore:"validNodeVersions"`
+	}
 )
 
 const firestoreCollection = "gcp-projects-dashboard"
@@ -35,6 +41,34 @@ func NewFirestoreClient(projectName string) *FirestoreClient {
 	}
 }
 
+// MasterVersion returns the GKE master version for the passed GCP project name.
+func (c FirestoreClient) MasterVersion(projectName string) string {
+	doc := c.client.Collection(clustersCollection).Doc(projectName)
+	snapshot, err := doc.Get(*c.context)
+	if err != nil {
+		log.Fatalf("Failed to read Firestore document %s in collection %s: %v", projectName, clustersCollection, err)
+	}
+	masterVersion, err := snapshot.DataAt("cluster.currentMasterVersion")
+	if err != nil {
+		log.Fatalf("Failed to read value of cluster.currentMasterVersion field in Firestore document %s in collection %s: %v", projectName, clustersCollection, err)
+	}
+
+	return masterVersion.(string)
+}
+// NodeVersion returns the GKE node version for the passed GCP project name.
+func (c FirestoreClient) NodeVersion(projectName string) string {
+	doc := c.client.Collection(clustersCollection).Doc(projectName)
+	snapshot, err := doc.Get(*c.context)
+	if err != nil {
+		log.Fatalf("Failed to read Firestore document %s in collection %s: %v", projectName, clustersCollection, err)
+	}
+	nodeVersion, err := snapshot.DataAt("cluster.currentNodeVersion")
+	if err != nil {
+		log.Fatalf("Failed to read value of cluster.currentNodeVersion field in Firestore document %s in collection %s: %v", projectName, clustersCollection, err)
+	}
+
+	return nodeVersion.(string)
+}
 // SaveDoc creates or updates the Firestore document with the passed name, setting its contents to the passed cluster details.
 func (c FirestoreClient) SaveDoc(projectName string, clusterDetails map[string]interface{}) error {
 	doc := c.client.Collection(firestoreCollection).Doc(projectName)
