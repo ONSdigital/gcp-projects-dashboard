@@ -72,7 +72,7 @@ func (c FirestoreClient) NodeVersion(projectName string) string {
 }
 // SaveDoc creates or updates the Firestore document with the passed name, setting its contents to the passed cluster details.
 func (c FirestoreClient) SaveDoc(projectName string, clusterDetails map[string]interface{}) error {
-	doc := c.client.Collection(firestoreCollection).Doc(projectName)
+	doc := c.client.Collection(clustersCollection).Doc(projectName)
 	_, err := doc.Set(*c.context, map[string]interface{}{
 		"cluster": clusterDetails,
 		"updated": now(),
