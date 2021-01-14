@@ -4,7 +4,7 @@ This repository contains a dashboard that displays useful information from multi
 ## Organisation
 This repository contains the following sub-directories:
 
-* [collector](https://github.com/ONSdigital/gcp-projects-dashboard/tree/master/collector) - [Go](https://golang.org/) application that runs as a Kubernetes [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) and calls the [Kubernetes Engine API](https://cloud.google.com/kubernetes-engine/docs/reference/rest) to collect information about each GKE cluster of interest. A [Cloud Firestore](https://cloud.google.com/firestore/) database is used as persistent storage. **Note that it is assumed there is only one GKE cluster per GCP project**
+* [collector](https://github.com/ONSdigital/gcp-projects-dashboard/tree/master/collector) - [Go](https://golang.org/) application that runs as a Kubernetes [CronJob](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) and calls the [Kubernetes Engine API](https://cloud.google.com/kubernetes-engine/docs/reference/rest) to collect information about each GKE cluster of interest. It also posts alerts to Slack when a cluster's GKE master or node version is the penultimate or last supported version. A [Cloud Firestore](https://cloud.google.com/firestore/) database is used as persistent storage. **Note that it is assumed there is only one GKE cluster per GCP project**
 
 * [versions](https://github.com/ONSdigital/gcp-projects-dashboard/tree/master/versions) - Go application that runs as a Kubernetes CronJob and calls the Kubernetes Engine API to retrieve inforation about available GKE versions. A Cloud Firestore database is used as persistent storage.
 
