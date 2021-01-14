@@ -9,9 +9,11 @@ import (
 	"time"
 
 	googlecloud "github.com/ONSdigital/gcp-projects-dashboard/collector/pkg/googlecloud"
+	"github.com/ONSdigital/gcp-projects-dashboard/collector/pkg/slack"
 )
 
 const rateLimitPause = 5 * time.Second
+const supportedGKEVersionWindow = 2
 
 func main() {
 	firestoreProject := ""
@@ -44,14 +46,36 @@ func main() {
 		cluster := client.GetFirstCluster()
 
 		if cluster != nil {
-			clusterDetails, err := redactSensitiveFields(cluster, "masterAuth")
-			if err != nil {
-				log.Fatal(err)
-			}
+			clusterDetails := redactSensitiveFields(cluster, "masterAuth")
+			firestoreClient.SaveGKEClusterDetails(projectName, clusterDetails)
 
-			err = firestoreClient.SaveDoc(projectName, clusterDetails)
-			if err != nil {
-				log.Fatalf("Failed to save document to Firestore: %v", err)
+			if len(cluster.NodePools) > 0 {
+				autoUpgrade := cluster.NodePools[0].Management.AutoUpgrade
+
+				if !autoUpgrade {
+
+					// Note that the returned arrays of available GKE master and node versions are ordered latest to earliest.
+					versions := firestoreClient.GetAvailableGKEVersions()
+
+					// Post a Slack alert if the current master version is the penultimate or last version in the list of available GKE master versions
+					// and if an alert hasn't already been posted for this version. Then save the details to Firestore.
+					masterVersion := cluster.CurrentMasterVersion
+					if indexOf(versions.MasterVersions, masterVersion) >= len(versions.MasterVersions)-supportedGKEVersionWindow {
+						if firestoreClient.GKEMasterVersionAlert(projectName) != masterVersion {
+							postSlackMessage("master", masterVersion, projectName, slackAlertsChannel, slackWebHookURL)
+							firestoreClient.SaveGKEMasterVersionAlert(masterVersion, projectName)
+						}
+					}
+
+					// Do the same for the node version.
+					nodeVersion := cluster.CurrentNodeVersion
+					if indexOf(versions.NodeVersions, nodeVersion) >= len(versions.NodeVersions)-supportedGKEVersionWindow {
+						if firestoreClient.GKENodeVersionAlert(projectName) != nodeVersion {
+							postSlackMessage("node", nodeVersion, projectName, slackAlertsChannel, slackWebHookURL)
+							firestoreClient.SaveGKENodeVersionAlert(nodeVersion, projectName)
+						}
+					}
+				}
 			}
 
 			time.Sleep(rateLimitPause)
@@ -59,10 +83,35 @@ func main() {
 	}
 }
 
-func redactSensitiveFields(obj interface{}, redactedFields ...string) (map[string]interface{}, error) {
+func indexOf(versions []string, version string) int {
+	for i, v := range versions {
+		if v == version {
+			return i
+		}
+	}
+	return -1
+}
+
+func postSlackMessage(nodeType, version, projectName, slackAlertsChannel, slackWebHookURL string) {
+	payload := slack.Payload{
+		Text:      fmt.Sprintf("GKE %s version *%s* in cluster *%s* will go out of support soon. Automatic upgrades are disabled for this cluster. Please upgrade.", nodeType, version, projectName),
+		Username:  "GCP Projects Dashboard",
+		Channel:   slackAlertsChannel,
+		IconEmoji: ":gke:",
+	}
+
+	time.Sleep(rateLimitPause)
+
+	err := slack.Send(slackWebHookURL, payload)
+	if err != nil {
+		log.Fatalf("Failed to send Slack message: %v", err)
+	}
+}
+
+func redactSensitiveFields(obj interface{}, redactedFields ...string) map[string]interface{} {
 	jsonString, err := json.Marshal(obj)
 	if err != nil {
-		return nil, err
+		log.Fatalf("Failed to marshal JSON: %v", err)
 	}
 
 	jsonMap := map[string]interface{}{}
@@ -72,5 +121,5 @@ func redactSensitiveFields(obj interface{}, redactedFields ...string) (map[strin
 		delete(jsonMap, field)
 	}
 
-	return jsonMap, nil
+	return jsonMap
 }
