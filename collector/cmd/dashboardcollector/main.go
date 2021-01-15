@@ -49,8 +49,8 @@ func main() {
 			clusterDetails := redactSensitiveFields(cluster, "masterAuth")
 			firestoreClient.SaveGKEClusterDetails(projectName, clusterDetails)
 
-			if len(cluster.NodePools) > 0 {
-				autoUpgrade := cluster.NodePools[0].Management.AutoUpgrade
+			for nodePoolIndex, nodePool := range cluster.NodePools {
+				autoUpgrade := nodePool.Management.AutoUpgrade
 
 				if !autoUpgrade {
 
@@ -62,7 +62,7 @@ func main() {
 					masterVersion := cluster.CurrentMasterVersion
 					if indexOf(versions.MasterVersions, masterVersion) >= len(versions.MasterVersions)-supportedGKEVersionWindow {
 						if firestoreClient.GKEMasterVersionAlert(projectName) != masterVersion {
-							postSlackMessage("master", masterVersion, projectName, slackAlertsChannel, slackWebHookURL)
+							postMasterSlackMessage(masterVersion, projectName, slackAlertsChannel, slackWebHookURL)
 							firestoreClient.SaveGKEMasterVersionAlert(masterVersion, projectName)
 						}
 					}
@@ -71,14 +71,14 @@ func main() {
 					nodeVersion := cluster.CurrentNodeVersion
 					if indexOf(versions.NodeVersions, nodeVersion) >= len(versions.NodeVersions)-supportedGKEVersionWindow {
 						if firestoreClient.GKENodeVersionAlert(projectName) != nodeVersion {
-							postSlackMessage("node", nodeVersion, projectName, slackAlertsChannel, slackWebHookURL)
+							postNodeSlackMessage(nodePoolIndex, nodeVersion, projectName, slackAlertsChannel, slackWebHookURL)
 							firestoreClient.SaveGKENodeVersionAlert(nodeVersion, projectName)
 						}
 					}
 				}
-			}
 
-			time.Sleep(rateLimitPause)
+				time.Sleep(rateLimitPause)
+			}
 		}
 	}
 }
@@ -92,9 +92,19 @@ func indexOf(versions []string, version string) int {
 	return -1
 }
 
-func postSlackMessage(nodeType, version, projectName, slackAlertsChannel, slackWebHookURL string) {
+func postMasterSlackMessage(version, projectName, slackAlertsChannel, slackWebHookURL string) {
+	text := fmt.Sprintf("GKE master version *%s* in cluster *%s* will go out of support soon. Automatic upgrades are disabled for this cluster. Please upgrade.", version, projectName)
+	postSlackMessage(text, slackAlertsChannel, slackWebHookURL)
+}
+
+func postNodeSlackMessage(nodePoolIndex int, version, projectName, slackAlertsChannel, slackWebHookURL string) {
+	text := fmt.Sprintf("GKE node version *%s* for *node pool %d* in cluster *%s* will go out of support soon. Automatic upgrades are disabled for this cluster. Please upgrade.", version, nodePoolIndex, projectName)
+	postSlackMessage(text, slackAlertsChannel, slackWebHookURL)
+}
+
+func postSlackMessage(text, slackAlertsChannel, slackWebHookURL string) {
 	payload := slack.Payload{
-		Text:      fmt.Sprintf("GKE %s version *%s* in cluster *%s* will go out of support soon. Automatic upgrades are disabled for this cluster. Please upgrade.", nodeType, version, projectName),
+		Text:      fmt.Sprintf(text),
 		Username:  "GCP Projects Dashboard",
 		Channel:   slackAlertsChannel,
 		IconEmoji: ":gke:",
