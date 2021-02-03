@@ -1,14 +1,14 @@
-<td><%= h cluster.dig(:currentMasterVersion) %></td>
+<td><% if master_version_alerts.any?{ |alert| alert.document_id == project.document_id && alert.get[:version] == cluster.dig(:currentMasterVersion) } %><img src="/svg/exclamation.svg" title="Version is about to go out of support"> <span class="warning"><%= h cluster.dig(:currentMasterVersion) %></span><% else %><%= h cluster.dig(:currentMasterVersion) %><% end %></td>
 <td class="ip-addresses"><% if cluster.dig(:masterAuthorizedNetworksConfig, :cidrBlocks) %><% cluster[:masterAuthorizedNetworksConfig][:cidrBlocks].each do |cidr_block| %><%= h cidr_block[:cidrBlock] %><% if cidr_block.dig(:displayName) %> (<%= h cidr_block[:displayName] %>)<% end %><br><% end %><% end %></td>
 <td><% if cluster.dig(:networkPolicy, :enabled) %><%= h cluster.dig(:networkPolicy, :provider).capitalize %><% end %></td>
 <td class="ip-addresses"><%= h cluster.dig(:ipAllocationPolicy, :clusterIpv4CidrBlock) %></td>
 <td><%= h cluster.dig(:databaseEncryption, :state).capitalize %></td>
 <td><%= h cluster.dig(:maintenancePolicy, :window, :dailyMaintenanceWindow, :startTime) %></td>
 <td><% if cluster.dig(:currentNodeCount) %><%= h cluster.dig(:currentNodeCount).to_i %><% else %>0<% end %></td>
-<td><% if cluster.dig(:privateClusterConfig, :enablePrivateNodes) %><img src="/svg/tick.svg" alt="Enabled"><% else %><img src="/svg/exclamation.svg" alt="Disabled"><% end %></td>
-<td><% if cluster.dig(:nodeConfig, :shieldedInstanceConfig, :enableSecureBoot) %><img src="/svg/tick.svg" alt="Enabled"><% else %><img src="/svg/exclamation.svg" alt="Disabled"><% end %></td>
-<td><% if cluster.dig(:shieldedNodes, :enabled) %><img src="/svg/tick.svg" alt="Enabled"><% else %><img src="/svg/exclamation.svg" alt="Disabled"><% end %></td>
-<td><% if cluster.dig(:workloadIdentityConfig, :workloadPool) %><img src="/svg/tick.svg" alt="Enabled"><% else %><img src="/svg/exclamation.svg" alt="Disabled"><% end %></td>
+<td><% if cluster.dig(:privateClusterConfig, :enablePrivateNodes) %><img src="/svg/tick.svg" title="Enabled"><% else %><img src="/svg/exclamation.svg" title="Disabled"><% end %></td>
+<td><% if cluster.dig(:nodeConfig, :shieldedInstanceConfig, :enableSecureBoot) %><img src="/svg/tick.svg" title="Enabled"><% else %><img src="/svg/exclamation.svg" title="Disabled"><% end %></td>
+<td><% if cluster.dig(:shieldedNodes, :enabled) %><img src="/svg/tick.svg" title="Enabled"><% else %><img src="/svg/exclamation.svg" title="Disabled"><% end %></td>
+<td><% if cluster.dig(:workloadIdentityConfig, :workloadPool) %><img src="/svg/tick.svg" title="Enabled"><% else %><img src="/svg/exclamation.svg" title="Disabled"><% end %></td>
 <td>
 <% if cluster.dig(:nodePools) %>
 <% cluster[:nodePools].each do |node_pool| %>
@@ -40,19 +40,19 @@
     </thead>
       <tbody>
         <tr>
-          <td><%= h node_pool[:version] %></td>
+          <td><% if node_version_alerts.any?{ |alert| alert.document_id == project.document_id && alert.get[:version] == node_pool[:version] } %><img src="/svg/exclamation.svg" title="Version is about to go out of support"> <span class="warning"><%= h node_pool[:version] %></span><% else %><%= h node_pool[:version] %><% end %></td>
           <td><%= h node_pool.dig(:config, :machineType) %></td>
           <td><%= h node_pool.dig(:config, :diskSizeGb).to_i %> GB</td>
           <td><%= h node_pool.dig(:config, :diskType) %></td>
           <td><%= h node_pool.dig(:config, :imageType) %></td>
-          <td><% if node_pool.dig(:management, :autoRepair) %><img src="/svg/tick.svg" alt="Enabled"><% else %><img src="/svg/exclamation.svg" alt="Disabled"><% end %></td>
-          <td><% if node_pool.dig(:management, :autoUpgrade) %><img src="/svg/tick.svg" alt="Enabled"><% else %><img src="/svg/exclamation.svg" alt="Disabled"><% end %></td>
+          <td><% if node_pool.dig(:management, :autoRepair) %><img src="/svg/tick.svg" title="Enabled"><% else %><img src="/svg/exclamation.svg" title="Disabled"><% end %></td>
+          <td><% if node_pool.dig(:management, :autoUpgrade) %><img src="/svg/tick.svg" title="Enabled"><% else %><img src="/svg/exclamation.svg" title="Disabled"><% end %></td>
         <% if node_pool.dig(:autoscaling, :enabled) %>
-          <td><img src="/svg/tick.svg" alt="Enabled"></td>
+          <td><img src="/svg/tick.svg" title="Enabled"></td>
         <% if node_pool.dig(:autoscaling, :minNodeCount) %>
           <td><%= h node_pool.dig(:autoscaling, :minNodeCount).to_i %></td>
         <% elsif node_pool.dig(:autoscaling, :autoprovisioned) %>
-          <td><img src="/svg/tick.svg" alt="Enabled"></td>
+          <td><img src="/svg/tick.svg" title="Enabled"></td>
         <% end %>
           <td><%= h node_pool.dig(:autoscaling, :maxNodeCount).to_i %></td>
         <% end %> <%# autoscaling enabled %>

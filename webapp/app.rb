@@ -34,6 +34,8 @@ get '/?' do
   firestore = Firestore.new(settings.firestore_project)
   erb :index, locals: { title: "#{settings.gcp_organisation} - GCP Projects Dashboard",
                         gcp_console_base_url: settings.gcp_console_base_url,
+                        master_version_alerts: firestore.all_master_version_alerts,
+                        node_version_alerts: firestore.all_node_version_alerts,
                         projects: firestore.all_projects,
                         bookmarks: firestore.bookmarks(@user) }
 end

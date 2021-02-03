@@ -118,11 +118,16 @@ table.nodepool td {
   font-size: 80%;
 }
 
+.note {
+  float: right;
+  font-style: italic;
+}
+
 .project {
   font-weight: bold;
 }
 
-.utc-note {
-  float: right;
-  font-style: italic;
+.warning {
+  color: red;
+  font-weight: bold;
 }
