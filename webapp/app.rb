@@ -44,6 +44,8 @@ get '/bookmarks?' do
   firestore = Firestore.new(settings.firestore_project)
   erb :bookmarks, locals: { title: "#{settings.gcp_organisation} Bookmarks - GCP Projects Dashboard",
                             gcp_console_base_url: settings.gcp_console_base_url,
+                            master_version_alerts: firestore.all_master_version_alerts,
+                            node_version_alerts: firestore.all_node_version_alerts,
                             projects: firestore.bookmarked_projects(@user) }
 end
 
