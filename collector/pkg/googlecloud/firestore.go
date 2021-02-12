@@ -94,6 +94,18 @@ func (c FirestoreClient) SaveGKENodeVersionAlert(nodeVersion, projectName string
 	c.saveVersionAlert(nodeAlertingCollection, nodeVersion, projectName)
 }
 
+// SaveSecurityPolicies creates or updates the Firestore document with the passed name, setting its contents to the passed security policy details.
+func (c FirestoreClient) SaveSecurityPolicies(projectName string, securityPolicies map[string]interface{}) {
+	doc := c.client.Collection(clustersCollection).Doc(projectName)
+	_, err := doc.Set(*c.context, map[string]interface{}{
+		"securityPolicies": securityPolicies,
+		"updated":          now(),
+	})
+	if err != nil {
+		log.Fatalf("Failed to update Firestore document %s in collection %s: %v", projectName, clustersCollection, err)
+	}
+}
+
 func now() string {
 	return time.Now().Format("Monday 02 Jan 2006 15:04:05 MST")
 }
