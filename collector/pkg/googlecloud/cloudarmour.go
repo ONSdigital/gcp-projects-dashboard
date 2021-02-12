@@ -38,7 +38,6 @@ func NewComputeClient(projectName string) *ComputeClient {
 
 // ListSecurityPolicies returns a list of Cloud Armour security policies within the project set on the client.
 func (c ComputeClient) ListSecurityPolicies() *compute.SecurityPolicyList {
-	// name := fmt.Sprintf("projects/%s/global/securityPolicies", c.projectName)
 	securityPolicies, err := c.securityPoliciesService.List(c.projectName).Context(*c.context).Do()
 	if err != nil {
 		log.Fatalf("Failed to list security policies in %s: %v", c.projectName, err)
