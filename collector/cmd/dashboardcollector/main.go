@@ -46,7 +46,7 @@ func main() {
 		cluster := gkeClient.GetFirstCluster()
 
 		if cluster != nil {
-			clusterDetails := redactSensitiveFields(cluster, "masterAuth")
+			clusterDetails := removeFields(cluster, "masterAuth")
 			firestoreClient.SaveGKEClusterDetails(projectName, clusterDetails)
 
 			for nodePoolIndex, nodePool := range cluster.NodePools {
@@ -82,7 +82,8 @@ func main() {
 		}
 
 		computeClient := googlecloud.NewComputeClient(projectName)
-		firestoreClient.SaveSecurityPolicies(projectName, toJSON(computeClient.ListSecurityPolicies().Items))
+		securityPolicies := removeFields(computeClient.ListSecurityPolicies(), "id", "kind")
+		firestoreClient.SaveSecurityPolicies(projectName, securityPolicies)
 	}
 }
 
@@ -121,7 +122,7 @@ func postSlackMessage(text, slackAlertsChannel, slackWebHookURL string) {
 	}
 }
 
-func redactSensitiveFields(obj interface{}, redactedFields ...string) map[string]interface{} {
+func removeFields(obj interface{}, fields ...string) map[string]interface{} {
 	jsonString, err := json.Marshal(obj)
 	if err != nil {
 		log.Fatalf("Failed to marshal JSON: %v", err)
@@ -133,23 +134,8 @@ func redactSensitiveFields(obj interface{}, redactedFields ...string) map[string
 		log.Fatalf("Failed to unmarshal JSON: %v", err)
 	}
 
-	for _, field := range redactedFields {
+	for _, field := range fields {
 		delete(jsonMap, field)
-	}
-
-	return jsonMap
-}
-
-func toJSON(obj interface{}) map[string]interface{} {
-	jsonString, err := json.Marshal(obj)
-	if err != nil {
-		log.Fatalf("Failed to marshal JSON: %v", err)
-	}
-
-	jsonMap := map[string]interface{}{}
-	err = json.Unmarshal(jsonString, &jsonMap)
-	if err != nil {
-		log.Fatalf("Failed to unmarshal JSON: %v", err)
 	}
 
 	return jsonMap
