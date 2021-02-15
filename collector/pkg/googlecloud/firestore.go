@@ -29,6 +29,7 @@ type (
 const clustersCollection = "gcp-projects-dashboard"
 const masterAlertingCollection = "gcp-projects-dashboard-gke-master-version-alerts"
 const nodeAlertingCollection = "gcp-projects-dashboard-gke-node-version-alerts"
+const securityRulesCollection = "gcp-projects-dashboard-cloud-armour-security-rules"
 const versionsCollection = "gcp-projects-dashboard-gke-versions"
 
 // NewFirestoreClient instantiates a new Firestore client for the passed GCP project name.
@@ -92,6 +93,18 @@ func (c FirestoreClient) SaveGKEMasterVersionAlert(masterVersion, projectName st
 // SaveGKENodeVersionAlert updates the Firestore document within the passed GKE node version for the passed project.
 func (c FirestoreClient) SaveGKENodeVersionAlert(nodeVersion, projectName string) {
 	c.saveVersionAlert(nodeAlertingCollection, nodeVersion, projectName)
+}
+
+// SaveSecurityPolicies creates or updates the Firestore document with the passed name, setting its contents to the passed security policy details.
+func (c FirestoreClient) SaveSecurityPolicies(projectName string, securityPolicies map[string]interface{}) {
+	doc := c.client.Collection(securityRulesCollection).Doc(projectName)
+	_, err := doc.Set(*c.context, map[string]interface{}{
+		"securityPolicies": securityPolicies,
+		"updated":          now(),
+	})
+	if err != nil {
+		log.Fatalf("Failed to update Firestore document %s in collection %s: %v", projectName, securityRulesCollection, err)
+	}
 }
 
 func now() string {
