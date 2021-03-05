@@ -2,10 +2,11 @@
 
 # Class to manage access to Firestore.
 class Firestore
-  FIRESTORE_CLUSTERS_COLLECTION      = 'gcp-projects-dashboard'
-  FIRESTORE_MASTER_ALERTS_COLLECTION = 'gcp-projects-dashboard-gke-master-version-alerts'
-  FIRESTORE_NODE_ALERTS_COLLECTION   = 'gcp-projects-dashboard-gke-node-version-alerts'
-  FIRESTORE_PREFERENCES_COLLECTION   = 'gcp-projects-dashboard-preferences'
+  FIRESTORE_CLUSTERS_COLLECTION       = 'gcp-projects-dashboard'
+  FIRESTORE_MASTER_ALERTS_COLLECTION  = 'gcp-projects-dashboard-gke-master-version-alerts'
+  FIRESTORE_NODE_ALERTS_COLLECTION    = 'gcp-projects-dashboard-gke-node-version-alerts'
+  FIRESTORE_PREFERENCES_COLLECTION    = 'gcp-projects-dashboard-preferences'
+  FIRESTORE_SECURITY_RULES_COLLECTION = 'gcp-projects-dashboard-cloud-armour-security-rules'
 
   def initialize(project)
     Google::Cloud::Firestore.configure { |config| config.project_id = project }
@@ -30,6 +31,10 @@ class Firestore
   
   def all_projects
     @client.col(FIRESTORE_CLUSTERS_COLLECTION).list_documents.all
+  end
+
+  def all_security_rules
+    @client.col(FIRESTORE_SECURITY_RULES_COLLECTION).list_documents.all
   end
 
   def bookmarked_projects(user)

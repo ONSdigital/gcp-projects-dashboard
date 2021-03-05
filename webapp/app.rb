@@ -49,6 +49,14 @@ get '/bookmarks?' do
                             projects: firestore.bookmarked_projects(@user) }
 end
 
+get '/ca?' do
+  firestore = Firestore.new(settings.firestore_project)
+  erb :ca, locals: { title: "#{settings.gcp_organisation} - GCP Projects Dashboard",
+                     gcp_console_base_url: settings.gcp_console_base_url,
+                     security_rules: firestore.all_security_rules
+ }
+end
+
 get '/health?' do
   halt 200
 end

@@ -48,14 +48,26 @@ table {
   font-size: 78%;  
 }
 
+table.cloudarmour {
+  border-spacing: 0;
+  border-style: hidden;
+}
+
 table.nodepool {
+  border-spacing: 1px;
+  font-size: 80%;  
+}
+
+table.cloudarmour, table.nodepool {
   background-color: #fff;
   border-color: 1px solid #000;
   border-collapse: separate; /* Needed to get the rounded corners to appear. */
-  border-spacing: 1px;
   border-radius: 4px;
-  font-size: 80%;
   margin-bottom: 8px;
+}
+
+table.cloudarmour td {
+  border-top: 1px solid #000;
 }
 
 thead {
@@ -77,10 +89,6 @@ th, td {
 }
 
 td {
-  background-color: #fff;
-}
-
-table.nodepool td {
   background-color: #fff;
 }
 
@@ -106,12 +114,22 @@ table.nodepool td {
   cursor: pointer;
 }
 
+.code {
+  font-family: "Courier New", Courier, monospace;
+}
+
 .even td {
   background-color: #fff;
 }
 
 .odd td {
   background-color: #ddd;
+}
+
+.ip-address {
+  background-color: #e2e2e2;
+  border-radius: 8px;
+  padding: 2px 6px;
 }
 
 .ip-addresses {
@@ -121,6 +139,14 @@ table.nodepool td {
 .note {
   float: right;
   font-style: italic;
+}
+
+.policyname {
+  background-color: #000;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 120%;
+  padding: 4px 6px;
 }
 
 .project {
