@@ -10,9 +10,10 @@ require_relative 'lib/firestore'
 set :partial_template_engine, :erb
 
 config = Configuration.new(ENV)
-set :firestore_project,    config.firestore_project
-set :gcp_console_base_url, config.gcp_console_base_url
-set :gcp_organisation,     config.gcp_organisation
+set :firestore_project,                 config.firestore_project
+set :gcp_console_base_url,              config.gcp_console_base_url
+set :gcp_console_cloud_armour_base_url, config.gcp_console_cloud_armour_base_url
+set :gcp_organisation,                  config.gcp_organisation
 
 helpers do
   def d(text)
@@ -52,7 +53,8 @@ end
 get '/ca?' do
   firestore = Firestore.new(settings.firestore_project)
   erb :ca, locals: { title: "#{settings.gcp_organisation} - GCP Projects Dashboard",
-                     gcp_console_base_url: settings.gcp_console_base_url,
+                     gcp_console_cloud_armour_base_url: settings.gcp_console_cloud_armour_base_url,
+                     projects: firestore.all_projects,
                      security_rules: firestore.all_security_rules
  }
 end

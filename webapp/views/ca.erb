@@ -5,15 +5,16 @@
       <th>Cloud Armour</th>
   </thead>
   <tbody>
-    <tr>
-      <td class="project">census-rh-dashboard</td>
+  <% projects.each_with_index do |project, i| %>
+    <tr class="<%= i.even? ? 'even' : 'odd' %>">
+      <td><span class="project"><a href="<%= gcp_console_cloud_armour_base_url %><%= h project.document_id %>"><%= h project.document_id %></a></span></td>
       <td>
     <% security_rules.each do |security_rule| policy = security_rule.get[:securityPolicies] %>
       <% policy[:items].each do |item| rules = item[:rules].sort_by { |rules| rules[:priority].to_i } %>
         <table class="cloudarmour">
           <thead>
             <tr>
-              <th colspan="4" class="policyname"><%= h item[:name] %> <% if item.key?(:description) %>(<%= h item[:description] %>)<% end %></th>
+              <th colspan="4" class="policyname"><%= h item[:name] %> <% if item.key?(:description) %>(<%= h item[:description] %>)<% end %><div class="policycreated"><strong>Created</strong><br><%= d item.dig(:creationTimestamp) %></span></th>
             </tr>
             <tr>
               <th>Action</th>
@@ -37,5 +38,6 @@
     <% end %> <%# security_rules.each %>
       </td>
     </tr>
+  <% end %> <%# projects.each_with_index %>
   </tbody>
 </table>

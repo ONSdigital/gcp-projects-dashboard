@@ -16,17 +16,18 @@ For the collector and versions applications, use `make` to compile binaries for 
 ## Environment Variables
 The environment variables below are required:
 
-| Component | Variable               | Purpose                                                                                                |
-|-----------|------------------------|--------------------------------------------------------------------------------------------------------|
-| collector | `FIRESTORE_PROJECT`    | Name of the GCP project containing the Firestore database.                                             |
-|           | `GCP_PROJECTS`         | List of GCP projects containing the GKE clusters to collect information for (one cluster per project). |
-|           | `SLACK_CHANNEL`        | Name of the Slack channel for post expiring GKE master/node version alerts to.                         |
-|           | `SLACK_WEBHOOK`        | Slack webhook for posting expiring GKE master/node version alerts to.                                  |
-| versions  | `FIRESTORE_PROJECT`    | Name of the GCP project containing the Firestore database.                                             |
-|           | `GCP_PROJECT`          | Name of the GCP project to use when invoking the Kubernetes Engine API.                                |
-| webapp    | `FIRESTORE_PROJECT`    | Name of the GCP project containing the Firestore database.                                             |
-|           | `GCP_CONSOLE_BASE_URL` | Base URL to use for the project hyperlinks. The project name is appended to this URL.                  |
-|           | `GCP_ORGANISATION`     | Name of the GCP organisation the deployed dashboard is reporting against. Displayed in the heading.    |
+| Component | Variable                            | Purpose                                                                                                       |
+|-----------|-------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| collector | `FIRESTORE_PROJECT`                 | Name of the GCP project containing the Firestore database.                                                    |
+|           | `GCP_PROJECTS`                      | List of GCP projects containing the GKE clusters to collect information for (one cluster per project).        |
+|           | `SLACK_CHANNEL`                     | Name of the Slack channel for post expiring GKE master/node version alerts to.                                |
+|           | `SLACK_WEBHOOK`                     | Slack webhook for posting expiring GKE master/node version alerts to.                                         |
+| versions  | `FIRESTORE_PROJECT`                 | Name of the GCP project containing the Firestore database.                                                    |
+|           | `GCP_PROJECT`                       | Name of the GCP project to use when invoking the Kubernetes Engine API.                                       |
+| webapp    | `FIRESTORE_PROJECT`                 | Name of the GCP project containing the Firestore database.                                                    |
+|           | `GCP_CONSOLE_BASE_URL`              | Base URL to use for the project hyperlinks on the GKE tab. The project name is appended to this URL.          |
+|           | `GCP_CONSOLE_CLOUD_ARMOUR_BASE_URL` | Base URL to use for the project hyperlinks on the Cloud Armour tab. The project name is appended to this URL. |
+|           | `GCP_ORGANISATION`                  | Name of the GCP organisation the deployed dashboard is reporting against. Displayed in the heading.           |
 
 ## IAM Roles
 The following [GCP IAM roles](https://cloud.google.com/iam/docs/understanding-roles) are required to run this software:
