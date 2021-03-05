@@ -10,6 +10,7 @@
       <td><span class="project"><a href="<%= gcp_console_cloud_armour_base_url %><%= h project.document_id %>"><%= h project.document_id %></a></span></td>
       <td>
     <% security_rules.each do |security_rule| policy = security_rule.get[:securityPolicies] %>
+    <% if project.document_id.eql?(security_rule.document_id) %>
     <% if policy.key?(:items) %>
       <% policy[:items].each do |item| rules = item[:rules].sort_by { |rules| rules[:priority].to_i } %>
         <table class="cloudarmour">
@@ -37,6 +38,7 @@
         </table>
       <% end %> <%# policy[:items].each %>
     <% else %>No Cloud Armour security policies.<% end %> <%# if policy.key?(:items) %>
+    <% end %> <%# if project.document_id.eql?(security_rule.document_id) %>
     <% end %> <%# security_rules.each %>
       </td>
     </tr>
