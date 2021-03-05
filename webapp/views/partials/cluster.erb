@@ -1,7 +1,7 @@
 <td><% if master_version_alerts.any?{ |alert| alert.document_id == project.document_id && alert.get[:version] == cluster.dig(:currentMasterVersion) } %><img src="/svg/exclamation.svg" title="Version is about to go out of support"> <span class="warning"><%= h cluster.dig(:currentMasterVersion) %></span><% else %><%= h cluster.dig(:currentMasterVersion) %><% end %></td>
-<td class="ip-addresses"><% if cluster.dig(:masterAuthorizedNetworksConfig, :cidrBlocks) %><% cluster[:masterAuthorizedNetworksConfig][:cidrBlocks].each do |cidr_block| %><span class="ip-address"><%= h cidr_block[:cidrBlock] %></span><% if cidr_block.dig(:displayName) %> (<%= h cidr_block[:displayName] %>)<% end %><br><% end %><% end %></td>
+<td class="ip-addresses"><% if cluster.dig(:masterAuthorizedNetworksConfig, :cidrBlocks) %><% cluster[:masterAuthorizedNetworksConfig][:cidrBlocks].each do |cidr_block| %><%= h cidr_block[:cidrBlock] %><% if cidr_block.dig(:displayName) %> (<%= h cidr_block[:displayName] %>)<% end %><br><% end %><% end %></td>
 <td><% if cluster.dig(:networkPolicy, :enabled) %><%= h cluster.dig(:networkPolicy, :provider).capitalize %><% end %></td>
-<td class="ip-addresses"><span class="ip-address"><%= h cluster.dig(:ipAllocationPolicy, :clusterIpv4CidrBlock) %></span></td>
+<td class="ip-addresses"><%= h cluster.dig(:ipAllocationPolicy, :clusterIpv4CidrBlock) %></td>
 <td><%= h cluster.dig(:databaseEncryption, :state).capitalize %></td>
 <td><%= h cluster.dig(:maintenancePolicy, :window, :dailyMaintenanceWindow, :startTime) %></td>
 <td><% if cluster.dig(:currentNodeCount) %><%= h cluster.dig(:currentNodeCount).to_i %><% else %>0<% end %></td>
