@@ -1,5 +1,5 @@
 $(function() {
-  $(".bookmark").on( "click", function(event) {
+  $(".bookmark").on("click", function(event) {
     if ($(event.target).attr("src") == "/svg/bookmark-off.svg") {
       $.post("/addbookmark", { bookmark: event.target.id });
       $(event.target).attr("src", "/svg/bookmark-on.svg?r=" + Math.random());
