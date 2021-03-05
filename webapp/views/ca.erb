@@ -5,7 +5,7 @@
       <th>Cloud Armour</th>
   </thead>
   <tbody>
-  <% projects.first(8).each_with_index do |project, i| %>
+  <% projects.each_with_index do |project, i| %>
     <tr class="<%= i.even? ? 'even' : 'odd' %>">
       <td><span class="project"><a href="<%= gcp_console_cloud_armour_base_url %><%= h project.document_id %>"><%= h project.document_id %></a></span></td>
       <td>
