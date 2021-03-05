@@ -92,6 +92,10 @@ td {
   background-color: #fff;
 }
 
+table.cloudarmour td, table.nodepool td {
+  background-color: #fff;
+}
+
 #gke-logo {
   height: 48px;
   width: 48px;
