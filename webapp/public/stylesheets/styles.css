@@ -193,7 +193,8 @@ table.cloudarmour td, table.nodepool td {
 
 .policyname {
   background-color: #000;
-  border-radius: 4px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   color: #fff;
   font-size: 120%;
   padding: 4px 6px;
