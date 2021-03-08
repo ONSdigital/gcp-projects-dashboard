@@ -1,0 +1,19 @@
+<nav>
+  <ul>
+    <li id="left"><a style="border-top-left-radius: 100px; border-bottom-left-radius: 100px;" href="/">Google Kubernetes Engine</a></li>
+    <li id="active" style="border-top-right-radius: 100px; border-bottom-right-radius: 100px;">Cloud Armour</li>
+  </ul>
+</nav>
+<p><span class="bookmarked-projects"><a href="/bookmarks">Bookmarked Projects</a></span><span class="note">All times are in UTC. Data updates every 30 minutes.</span></p>
+<table>
+  <%= partial 'partials/cloudarmour_thead' %>
+  <tbody>
+  <% security_rules.each_with_index do |security_rule, i| policy = security_rule.get[:securityPolicies] %>
+    <tr class="<%= i.even? ? 'even' : 'odd' %>">
+      <td><span class="project"><a href="<%= gcp_console_cloud_armour_base_url %><%= h security_rule.document_id %>"><%= h security_rule.document_id %></a></span></td>
+      <%= partial 'partials/cloudarmour', locals: { policy: policy } %>
+      <td><%= d security_rule.get[:updated] %></td>
+    </tr>
+  <% end %> <%# security_rules.each_with_index %>
+  </tbody>
+</table>

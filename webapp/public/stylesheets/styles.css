@@ -35,6 +35,46 @@ img {
   width: 18px;
 }
 
+nav ul {
+  margin: 30px 0;
+  padding-left: 0;
+  white-space: nowrap;
+}
+
+nav li {
+  display: inline;
+  font-weight: bold;
+  list-style-type: none;
+  margin-right: -5px;
+}
+
+nav a {
+  border: 2px solid #e2e2e2;
+  padding: 10px 20px;
+}
+
+nav a:link, nav a:visited
+{
+  background-color: white;
+  color: black;
+  text-decoration: none;
+}
+
+nav a:hover
+{
+  background-color: #000;
+  border: 2px solid #000;
+  color: #fff;
+  text-decoration: none;
+}
+
+nav li#active {
+  background-color: #000;
+  border: 2px solid #000;
+  color: white;
+  padding: 10px 20px;
+}
+
 p {
   font-size: 80%;
 }

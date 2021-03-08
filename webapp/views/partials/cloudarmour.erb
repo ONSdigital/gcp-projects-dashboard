@@ -1,0 +1,29 @@
+<td>
+<% if policy.key?(:items) %>
+<% policy[:items].each do |item| rules = item[:rules].sort_by { |rules| rules[:priority].to_i } %>
+  <table class="cloudarmour">
+    <thead>
+      <tr>
+        <th colspan="4" class="policyname"><%= h item[:name] %> <% if item.key?(:description) %>(<%= h item[:description] %>)<% end %><div class="policycreated"><strong>Created</strong><br><%= d item.dig(:creationTimestamp) %></span></th>
+      </tr>
+      <tr>
+        <th>Action</th>
+        <th>Match</th>
+        <th>Description</th>
+        <th>Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% rules.each do |rule| %>
+      <tr>
+        <td><% if rule[:action].eql?('allow') %><img src="/svg/tick.svg" title="Allow"> Allow<% elsif rule[:action].eql?('deny(403)') && rule.key?(:preview) && rule[:preview] %><img src="/svg/deny-off.svg" title="Deny - preview only"> Deny (403): preview only<% elsif rule[:action].eql?('deny(403)') %><img src="/svg/deny-on.svg" title="Deny"> Deny (403)<% end %></td>
+        <td class="code"><% if rule.dig(:match, :config, :srcIpRanges) %><% rule[:match][:config][:srcIpRanges].each do |ip_range| %><span class="ip-address"><%= h ip_range %></span> <% end %><% elsif rule.dig(:match, :expr, :expression) %><%= h rule[:match][:expr][:expression] %><% end %></td>
+        <td><%= h rule[:description] %></td>
+        <td><%= h rule[:priority].to_i %></td>
+      </tr>
+    <% end %> <%# rules.each %>
+    </tbody>
+  </table>
+<% end %> <%# policy[:items].each %>
+<% else %>No Cloud Armour security policies specified.<% end %> <%# if policy.key?(:items) %>
+</td>
