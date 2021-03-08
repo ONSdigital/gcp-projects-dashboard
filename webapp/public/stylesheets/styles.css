@@ -85,7 +85,8 @@ table {
   border-collapse: separate; /* Needed to get the rounded corners to appear. */
   border-spacing: 1px;
   border-radius: 6px;
-  font-size: 78%;  
+  font-size: 78%;
+  width: 100%;
 }
 
 table.cloudarmour {
