@@ -17,9 +17,9 @@
     <% rules.each do |rule| %>
       <tr>
         <td><% if rule[:action].eql?('allow') %><img src="/svg/tick.svg" title="Allow"> Allow<% elsif rule[:action].eql?('deny(403)') && rule.key?(:preview) && rule[:preview] %><img src="/svg/deny-off.svg" title="Deny - preview only"> Deny (403): preview only<% elsif rule[:action].eql?('deny(403)') %><img src="/svg/deny-on.svg" title="Deny"> Deny (403)<% end %></td>
-        <td class="code"><% if rule.dig(:match, :config, :srcIpRanges) %><% rule[:match][:config][:srcIpRanges].each do |ip_range| %><span class="ip-address"><%= h ip_range %></span> <% end %><% elsif rule.dig(:match, :expr, :expression) %><%= h rule[:match][:expr][:expression] %><% end %></td>
+        <td class="code"><% if rule.dig(:match, :config, :srcIpRanges) %><% rule[:match][:config][:srcIpRanges].each do |ip_range| %><span class="ip-address"><%= h ip_range %></span> <% if ip_range.eql?('*') %>(All IP addresses)<% end %><% end %><% elsif rule.dig(:match, :expr, :expression) %><%= h rule[:match][:expr][:expression] %><% end %></td>
         <td><%= h rule[:description] %></td>
-        <td><%= h rule[:priority].to_i %></td>
+        <td><%= n rule[:priority] %></td>
       </tr>
     <% end %> <%# rules.each %>
     </tbody>

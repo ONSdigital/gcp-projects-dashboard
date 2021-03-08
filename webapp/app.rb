@@ -23,6 +23,10 @@ helpers do
   def h(text)
     Rack::Utils.escape_html(text)
   end
+
+  def n(float)
+    float.to_i.to_s.reverse.scan(/\d{3}|.+/).join(",").reverse
+  end
 end
 
 before do
