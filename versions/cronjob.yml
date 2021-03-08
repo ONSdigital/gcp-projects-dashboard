@@ -1,0 +1,23 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: gcp-dashboard-versions
+spec:
+  schedule: "0/2 * * * *"
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: projects-dashboard-gkeversions
+          containers:
+          - name: versions
+            image: eu.gcr.io/census-int-ci/gcp-projects-dashboard-gkeversions:latest
+            imagePullPolicy: Always
+            env:
+            - name: FIRESTORE_PROJECT
+              value: "census-rh-dashboard"
+            - name: GCP_PROJECT
+              value: "census-rh-dashboard"
+          restartPolicy: Never
+

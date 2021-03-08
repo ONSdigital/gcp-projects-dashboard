@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gcp-projects-dashboard
+data:
+  gcp-console-base-url: https://console.cloud.google.com/kubernetes/list?project=
+  gcp-console-cloud-armour-base-url: https://console.cloud.google.com/net-security/securitypolicies/list?project=
+  gcp-organisation: Census
+  gcp-projects: census-rh-dashboard
+  slack-channel: "#gke-version-alerts-test"

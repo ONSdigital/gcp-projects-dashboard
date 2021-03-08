@@ -9,18 +9,28 @@ spec:
     spec:
       template:
         spec:
-          serviceAccountName: dashboard-agent
+          serviceAccountName: projects-dashboard-collector
           containers:
           - name: collector
-            image: eu.gcr.io/ons-gcr/gcp-projects-dashboard-collector:latest
+            image: eu.gcr.io/census-int-ci/gcp-projects-dashboard-collector:latest
             imagePullPolicy: Always
             env:
             - name: FIRESTORE_PROJECT
-              value: "census-rh-jt-gke"
+              value: "census-rh-dashboard"
             - name: GCP_PROJECTS
               valueFrom:
                 configMapKeyRef:
                   name: gcp-projects-dashboard
                   key: gcp-projects
+            - name: SLACK_CHANNEL
+              valueFrom:
+                configMapKeyRef:
+                  name: gcp-projects-dashboard
+                  key: slack-channel
+            - name: SLACK_WEBHOOK
+              valueFrom:
+                secretKeyRef:
+                  name: gcp-projects-dashboard
+                  key: slack-webhook
           restartPolicy: Never
 

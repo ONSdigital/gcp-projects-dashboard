@@ -30,18 +30,23 @@ spec:
       labels:
         app: gcp-projects-dashboard-webapp
     spec:
-      serviceAccountName: dashboard-webapp
+      serviceAccountName: projects-dashboard-webapp
       containers:
       - name: webapp
         image: eu.gcr.io/census-int-ci/gcp-projects-dashboard-webapp:latest
         imagePullPolicy: Always
         env:
         - name: FIRESTORE_PROJECT
-          value: "census-rh-jt-gke"
+          value: "census-rh-dashboard"
         - name: GCP_CONSOLE_BASE_URL
           valueFrom:
             configMapKeyRef:
               key: gcp-console-base-url
+              name: gcp-projects-dashboard
+        - name: GCP_CONSOLE_CLOUD_ARMOUR_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: gcp-console-cloud-armour-base-url
               name: gcp-projects-dashboard
         - name: GCP_ORGANISATION
           valueFrom:
@@ -54,13 +59,13 @@ spec:
             memory: 128Mi
         readinessProbe:
           httpGet:
-            path: /
+            path: /health
             port: 3000
           initialDelaySeconds: 10
           periodSeconds: 10
         livenessProbe:
           httpGet:
-            path: /
+            path: /health
             port: 3000
           initialDelaySeconds: 10
           periodSeconds: 10
