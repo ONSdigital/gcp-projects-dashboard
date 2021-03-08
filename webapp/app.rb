@@ -54,8 +54,7 @@ get '/cloudarmour?' do
   firestore = Firestore.new(settings.firestore_project)
   erb :cloudarmour, locals: { title: "#{settings.gcp_organisation} - GCP Projects Dashboard",
                               gcp_console_cloud_armour_base_url: settings.gcp_console_cloud_armour_base_url,
-                              security_rules: firestore.all_security_rules
- }
+                              security_rules: firestore.all_security_rules }
 end
 
 get '/health?' do
