@@ -50,11 +50,19 @@ get '/bookmarks?' do
                             projects: firestore.bookmarked_projects(@user) }
 end
 
+get '/bookmarks-cloudarmour?' do
+  firestore = Firestore.new(settings.firestore_project)
+  erb :bookmarkscloudarmour, locals: { title: "#{settings.gcp_organisation} Bookmarks - GCP Projects Dashboard",
+                                       gcp_console_cloud_armour_base_url: settings.gcp_console_cloud_armour_base_url,
+                                       security_rules: firestore.bookmarked_security_rules(@user) }
+end
+
 get '/cloudarmour?' do
   firestore = Firestore.new(settings.firestore_project)
   erb :cloudarmour, locals: { title: "#{settings.gcp_organisation} - GCP Projects Dashboard",
                               gcp_console_cloud_armour_base_url: settings.gcp_console_cloud_armour_base_url,
-                              security_rules: firestore.all_security_rules }
+                              security_rules: firestore.all_security_rules,
+                              bookmarks: firestore.bookmarks(@user) }
 end
 
 get '/health?' do

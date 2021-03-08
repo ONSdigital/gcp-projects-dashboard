@@ -4,16 +4,21 @@
     <li id="active" style="border-top-right-radius: 100px; border-bottom-right-radius: 100px;">Cloud Armour</li>
   </ul>
 </nav>
-<p><span class="bookmarked-projects"><a href="/bookmarks-cloudarmour">Bookmarked Projects</a></span><span class="note">All times are in UTC. Data updates every 30 minutes.</span></p>
+<% if security_rules.any? %>
+<p><span class="all-projects"><a href="/cloudarmour">All Projects</a></span><span class="note">All times are in UTC. Data updates every 30 minutes.</span></p>
 <table>
   <%= partial 'partials/cloudarmour_thead' %>
   <tbody>
   <% security_rules.each_with_index do |security_rule, i| policy = security_rule.get[:securityPolicies] %>
     <tr class="<%= i.even? ? 'even' : 'odd' %>">
-      <td><span class="project"><a href="<%= gcp_console_cloud_armour_base_url %><%= h security_rule.document_id %>"><%= h security_rule.document_id %></a></span><br><br><% if bookmarks.include?(security_rule.document_id) %><img id="<%= h security_rule.document_id %>" class="bookmark" src="/svg/bookmark-on.svg" title="Project bookmarked"><% else %><img id="<%= h security_rule.document_id %>" class="bookmark" src="/svg/bookmark-off.svg" title="Bookmark project"><% end %></td>
+      <td><span class="project"><a href="<%= gcp_console_cloud_armour_base_url %><%= h security_rule.document_id %>"><%= h security_rule.document_id %></a></span></td>
       <%= partial 'partials/cloudarmour', locals: { policy: policy } %>
       <td><%= d security_rule.get[:updated] %></td>
     </tr>
   <% end %> <%# security_rules.each_with_index %>
   </tbody>
 </table>
+<% else %>
+<p><span class="all-projects"><a href="/cloudarmour">All Projects</a></span></p>
+<p id="notice"><img src="/svg/bookmark-off.svg" alt="Bookmark"> You don’t have any bookmarked projects.</p>
+<% end %>

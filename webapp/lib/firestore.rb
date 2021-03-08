@@ -44,6 +44,13 @@ class Firestore
     bookmarked_projects
   end
 
+  def bookmarked_security_rules(user)
+    bookmarks = bookmarks(user)
+    bookmarked_projects = []
+    all_security_rules.each { |security_rule| bookmarked_projects << security_rule if bookmarks.include?(security_rule.document_id) }
+    bookmarked_projects
+  end
+
   def bookmarks(user)
     preferences = @client.col(FIRESTORE_PREFERENCES_COLLECTION).doc(user)
     return [] if preferences.get.data.nil?
