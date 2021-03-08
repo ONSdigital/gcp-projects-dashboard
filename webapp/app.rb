@@ -54,7 +54,6 @@ get '/ca?' do
   firestore = Firestore.new(settings.firestore_project)
   erb :ca, locals: { title: "#{settings.gcp_organisation} - GCP Projects Dashboard",
                      gcp_console_cloud_armour_base_url: settings.gcp_console_cloud_armour_base_url,
-                     projects: firestore.all_projects,
                      security_rules: firestore.all_security_rules
  }
 end

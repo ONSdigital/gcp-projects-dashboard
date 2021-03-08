@@ -5,12 +5,10 @@
       <th>Cloud Armour</th>
   </thead>
   <tbody>
-  <% projects.first(12).each_with_index do |project, i| %>
+  <% security_rules.each_with_index do |security_rule, i| policy = security_rule.get[:securityPolicies] %>
     <tr class="<%= i.even? ? 'even' : 'odd' %>">
-      <td><span class="project"><a href="<%= gcp_console_cloud_armour_base_url %><%= h project.document_id %>"><%= h project.document_id %></a></span></td>
+      <td><span class="project"><a href="<%= gcp_console_cloud_armour_base_url %><%= h security_rule.document_id %>"><%= h security_rule.document_id %></a></span></td>
       <td>
-    <% security_rules.each do |security_rule| policy = security_rule.get[:securityPolicies] %>
-    <% if project.document_id.eql?(security_rule.document_id) %>
     <% if policy.key?(:items) %>
       <% policy[:items].each do |item| rules = item[:rules].sort_by { |rules| rules[:priority].to_i } %>
         <table class="cloudarmour">
@@ -38,10 +36,8 @@
         </table>
       <% end %> <%# policy[:items].each %>
     <% else %>No Cloud Armour security policies.<% end %> <%# if policy.key?(:items) %>
-    <% end %> <%# if project.document_id.eql?(security_rule.document_id) %>
-    <% end %> <%# security_rules.each %>
       </td>
     </tr>
-  <% end %> <%# projects.each_with_index %>
+  <% end %> <%# security_rules.each_with_index %>
   </tbody>
 </table>
