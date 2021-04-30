@@ -62,7 +62,7 @@ GEM
       rack
     rainbow (3.0.0)
     rbtree (0.4.2)
-    rexml (3.2.4)
+    rexml (3.2.5)
     rly (0.2.3)
     rubocop (0.83.0)
       parallel (~> 1.10)
