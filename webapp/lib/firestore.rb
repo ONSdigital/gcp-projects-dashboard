@@ -28,7 +28,7 @@ class Firestore
   def all_node_version_alerts
     @client.col(FIRESTORE_NODE_ALERTS_COLLECTION).list_documents.all
   end
-  
+
   def all_projects
     @client.col(FIRESTORE_CLUSTERS_COLLECTION).list_documents.all
   end
