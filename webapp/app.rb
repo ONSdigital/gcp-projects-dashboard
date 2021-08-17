@@ -25,7 +25,7 @@ helpers do
   end
 
   def n(float)
-    float.to_i.to_s.reverse.scan(/\d{3}|.+/).join(",").reverse
+    float.to_i.to_s.reverse.scan(/\d{3}|.+/).join(',').reverse
   end
 end
 

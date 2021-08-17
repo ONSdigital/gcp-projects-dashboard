@@ -2,7 +2,7 @@
 
 #\ --quiet
 
-require_relative 'app.rb'
+require_relative 'app'
 
 use Rack::ETag
 use Rack::ConditionalGet
