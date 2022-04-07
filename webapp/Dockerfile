@@ -1,13 +1,7 @@
-FROM ruby:3.1.0
+FROM europe-west2-docker.pkg.dev/ons-ci/ons-ci/gcp-projects-dashboard-webapp-parent-image:latest
 
 WORKDIR /usr/src/app
 COPY . ./
-
-RUN gem install bundler --no-document && \
-    addgroup --gid 1000 sinatra && \
-    adduser --system --uid 1000 --gid 1000 sinatra && \
-    chown -R sinatra:sinatra ./ && \
-    bundle install
 
 USER sinatra
 
