@@ -15,6 +15,8 @@ set :gcp_console_base_url,              config.gcp_console_base_url
 set :gcp_console_cloud_armour_base_url, config.gcp_console_cloud_armour_base_url
 set :gcp_organisation,                  config.gcp_organisation
 
+set :logging, false # Stop Sinatra logging routes to STDERR.
+
 helpers do
   def d(text)
     Time.parse(text).utc.strftime('%d/%m/%Y %H:%M')
