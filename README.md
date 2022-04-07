@@ -10,6 +10,8 @@ This repository contains the following sub-directories:
 
 * [webapp](https://github.com/ONSdigital/gcp-projects-dashboard/tree/master/webapp) - [Ruby](https://ruby-lang.org/) [Sinatra](http://sinatrarb.com/) dashboard application that displays the information held in Firestore
 
+* [parent-image](https://github.com/ONSdigital/gcp-projects-dashboard/tree/master/webapp-parent-image) - Docker parent image containing Ruby and the dependencies required by the web application. Used to speed up the Docker build
+
 ## Building
 For the collector and versions applications, use `make` to compile binaries for macOS and Linux.
 
@@ -43,4 +45,4 @@ The following [GCP IAM roles](https://cloud.google.com/iam/docs/understanding-ro
 | webapp    | `roles/datastore.user`          |
 
 ## Copyright
-Copyright (C) 2020-2021 Crown Copyright (Office for National Statistics)
+Copyright (C) 2020&ndash;2022 Crown Copyright (Office for National Statistics)
