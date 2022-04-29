@@ -2,6 +2,7 @@
 
 require 'sinatra'
 require 'sinatra/partial'
+require 'ons-numbers'
 require 'google/cloud/firestore'
 
 require_relative 'lib/configuration'
@@ -26,8 +27,8 @@ helpers do
     Rack::Utils.escape_html(text)
   end
 
-  def n(float)
-    float.to_i.to_s.reverse.scan(/\d{3}|.+/).join(',').reverse
+  def n(number)
+    Numbers.grouping(number)
   end
 end
 
