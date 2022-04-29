@@ -73,6 +73,7 @@ GEM
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
+    ons-numbers (1.0.0)
     os (1.1.4)
     parallel (1.22.1)
     parser (3.1.1.0)
@@ -120,6 +121,7 @@ PLATFORMS
 
 DEPENDENCIES
   google-cloud-firestore
+  ons-numbers
   puma
   rubocop
   sinatra
