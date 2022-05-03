@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ons-firestore'
+
 # Class to manage access to Firestore.
 class Firestore
   FIRESTORE_CLUSTERS_COLLECTION       = 'gcp-projects-dashboard'
@@ -9,12 +11,11 @@ class Firestore
   FIRESTORE_SECURITY_RULES_COLLECTION = 'gcp-projects-dashboard-cloud-armour-security-rules'
 
   def initialize(project)
-    Google::Cloud::Firestore.configure { |config| config.project_id = project }
-    @client = Google::Cloud::Firestore.new
+    @firestore = Firestore.new(project)
   end
 
   def add_bookmark(user, bookmark)
-    preferences = @client.col(FIRESTORE_PREFERENCES_COLLECTION).doc(user)
+    preferences = @firestore.document_reference(FIRESTORE_PREFERENCES_COLLECTION, user)
     bookmarks = []
     bookmarks = preferences.get[:bookmarks] unless preferences.get.data.nil?
     bookmarks << bookmark unless bookmarks.include?(bookmark)
@@ -22,19 +23,19 @@ class Firestore
   end
 
   def all_master_version_alerts
-    @client.col(FIRESTORE_MASTER_ALERTS_COLLECTION).list_documents.all
+    @firestore.all_documents(FIRESTORE_MASTER_ALERTS_COLLECTION)
   end
 
   def all_node_version_alerts
-    @client.col(FIRESTORE_NODE_ALERTS_COLLECTION).list_documents.all
+    @firestore.all_documents(FIRESTORE_NODE_ALERTS_COLLECTION)
   end
 
   def all_projects
-    @client.col(FIRESTORE_CLUSTERS_COLLECTION).list_documents.all
+    @firestore.all_documents(FIRESTORE_CLUSTERS_COLLECTION)
   end
 
   def all_security_rules
-    @client.col(FIRESTORE_SECURITY_RULES_COLLECTION).list_documents.all
+    @firestore.all_documents(FIRESTORE_SECURITY_RULES_COLLECTION)
   end
 
   def bookmarked_projects(user)
@@ -52,14 +53,14 @@ class Firestore
   end
 
   def bookmarks(user)
-    preferences = @client.col(FIRESTORE_PREFERENCES_COLLECTION).doc(user)
+    preferences = @firestore.read_document(FIRESTORE_PREFERENCES_COLLECTION, user)
     return [] if preferences.get.data.nil?
 
     preferences.get[:bookmarks]
   end
 
   def remove_bookmark(user, bookmark)
-    preferences = @client.col(FIRESTORE_PREFERENCES_COLLECTION).doc(user)
+    preferences = @firestore.document_reference(FIRESTORE_PREFERENCES_COLLECTION, user)
     bookmarks = []
     bookmarks = preferences.get[:bookmarks] unless preferences.get.data.nil?
     bookmarks&.delete(bookmark)
