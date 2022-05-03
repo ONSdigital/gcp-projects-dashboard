@@ -46,17 +46,17 @@ GEM
       google-cloud-core (~> 1.5)
       google-cloud-firestore-v1 (~> 0.0)
       rbtree (~> 0.4.2)
-    google-cloud-firestore-v1 (0.4.7)
+    google-cloud-firestore-v1 (0.5.0)
       gapic-common (>= 0.7, < 2.a)
       google-cloud-errors (~> 1.0)
-    google-protobuf (3.20.0-x86_64-darwin)
+    google-protobuf (3.20.1-x86_64-darwin)
     googleapis-common-protos (1.3.12)
       google-protobuf (~> 3.14)
       googleapis-common-protos-types (~> 1.2)
       grpc (~> 1.27)
     googleapis-common-protos-types (1.3.1)
       google-protobuf (~> 3.14)
-    googleauth (1.1.2)
+    googleauth (1.1.3)
       faraday (>= 0.17.3, < 3.a)
       jwt (>= 1.4, < 3.0)
       memoist (~> 0.16)
@@ -73,12 +73,14 @@ GEM
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
+    ons-firestore (1.0.2)
+      google-cloud-firestore (~> 2.6)
     ons-numbers (1.0.0)
     os (1.1.4)
     parallel (1.22.1)
     parser (3.1.1.0)
       ast (~> 2.4.1)
-    public_suffix (4.0.6)
+    public_suffix (4.0.7)
     puma (5.6.4)
       nio4r (~> 2.0)
     rack (2.2.3)
@@ -120,7 +122,7 @@ PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
-  google-cloud-firestore
+  ons-firestore
   ons-numbers
   puma
   rubocop
