@@ -2,11 +2,9 @@
 
 require 'sinatra'
 require 'sinatra/partial'
-require 'ons-numbers'
-require 'google/cloud/firestore'
 
 require_relative 'lib/configuration'
-require_relative 'lib/firestore'
+require_relative 'lib/firestore_client'
 
 set :partial_template_engine, :erb
 
@@ -27,19 +25,19 @@ helpers do
     Rack::Utils.escape_html(text)
   end
 
-  def n(number)
-    Numbers.grouped(number)
+  def n(float)
+    float.to_i.to_s.reverse.scan(/\d{3}|.+/).join(',').reverse
   end
 end
 
 before do
   headers 'Content-Type' => 'text/html; charset=utf-8'
   user_header = request.env['HTTP_X_GOOG_AUTHENTICATED_USER_EMAIL']
-  @user = user_header.partition('accounts.google.com:').last unless user_header.nil?
+  @user = 'john.topley@ons.gov.uk'
 end
 
 get '/?' do
-  firestore = Firestore.new(settings.firestore_project)
+  firestore = FirestoreClient.new(settings.firestore_project)
   erb :index, locals: { title: "#{settings.gcp_organisation} - GCP Projects Dashboard",
                         gcp_console_base_url: settings.gcp_console_base_url,
                         master_version_alerts: firestore.all_master_version_alerts,
@@ -49,7 +47,7 @@ get '/?' do
 end
 
 get '/bookmarks?' do
-  firestore = Firestore.new(settings.firestore_project)
+  firestore = FirestoreClient.new(settings.firestore_project)
   erb :bookmarks, locals: { title: "#{settings.gcp_organisation} Bookmarks - GCP Projects Dashboard",
                             gcp_console_base_url: settings.gcp_console_base_url,
                             master_version_alerts: firestore.all_master_version_alerts,
@@ -58,14 +56,14 @@ get '/bookmarks?' do
 end
 
 get '/bookmarks-cloudarmour?' do
-  firestore = Firestore.new(settings.firestore_project)
+  firestore = FirestoreClient.new(settings.firestore_project)
   erb :bookmarkscloudarmour, locals: { title: "#{settings.gcp_organisation} Bookmarks - GCP Projects Dashboard",
                                        gcp_console_cloud_armour_base_url: settings.gcp_console_cloud_armour_base_url,
                                        security_rules: firestore.bookmarked_security_rules(@user) }
 end
 
 get '/cloudarmour?' do
-  firestore = Firestore.new(settings.firestore_project)
+  firestore = FirestoreClient.new(settings.firestore_project)
   erb :cloudarmour, locals: { title: "#{settings.gcp_organisation} - GCP Projects Dashboard",
                               gcp_console_cloud_armour_base_url: settings.gcp_console_cloud_armour_base_url,
                               security_rules: firestore.all_security_rules,
@@ -78,11 +76,11 @@ end
 
 # The routes below are invoked from AJAX actions.
 post '/addbookmark?' do
-  firestore = Firestore.new(settings.firestore_project)
+  firestore = FirestoreClient.new(settings.firestore_project)
   firestore.add_bookmark(@user, params[:bookmark])
 end
 
 post '/removebookmark?' do
-  firestore = Firestore.new(settings.firestore_project)
+  firestore = FirestoreClient.new(settings.firestore_project)
   firestore.remove_bookmark(@user, params[:bookmark])
 end

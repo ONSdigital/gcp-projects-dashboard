@@ -3,7 +3,7 @@
 require 'ons-firestore'
 
 # Class to manage access to Firestore.
-class Firestore
+class FirestoreClient
   FIRESTORE_CLUSTERS_COLLECTION       = 'gcp-projects-dashboard'
   FIRESTORE_MASTER_ALERTS_COLLECTION  = 'gcp-projects-dashboard-gke-master-version-alerts'
   FIRESTORE_NODE_ALERTS_COLLECTION    = 'gcp-projects-dashboard-gke-node-version-alerts'
@@ -53,7 +53,7 @@ class Firestore
   end
 
   def bookmarks(user)
-    preferences = @firestore.read_document(FIRESTORE_PREFERENCES_COLLECTION, user)
+    preferences = @firestore.document_reference(FIRESTORE_PREFERENCES_COLLECTION, user)
     return [] if preferences.get.data.nil?
 
     preferences.get[:bookmarks]
