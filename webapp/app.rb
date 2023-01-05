@@ -31,9 +31,17 @@ helpers do
 end
 
 before do
+  headers 'Cache-Control' => 'no-cache'
+  headers 'Content-Security-Policy' => "default-src 'self'; img-src 'self' data: https://cdn.ons.gov.uk; script-src 'self' https://ajax.googleapis.com;"
   headers 'Content-Type' => 'text/html; charset=utf-8'
+  headers 'Permissions-Policy' => 'fullscreen=(self)'
+  headers 'Referrer-Policy' => 'strict-origin-when-cross-origin'
+  headers 'Strict-Transport-Security' => 'max-age=63072000; includeSubDomains; preload'
+  headers 'X-Content-Type-Options' => 'nosniff'
+  headers 'X-Frame-Options' => 'deny'
+  headers 'X-XSS-Protection' => '1; mode=block'
   user_header = request.env['HTTP_X_GOOG_AUTHENTICATED_USER_EMAIL']
-  @user = 'john.topley@ons.gov.uk'
+  @user = user_header.partition('accounts.google.com:').last unless user_header.nil?
 end
 
 get '/?' do
