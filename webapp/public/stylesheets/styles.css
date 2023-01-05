@@ -181,6 +181,11 @@ table.cloudarmour td, table.nodepool td {
   font-size: 80%;
 }
 
+.left-radius {
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+}
+
 .note {
   float: right;
   font-style: italic;
@@ -202,6 +207,11 @@ table.cloudarmour td, table.nodepool td {
 
 .project {
   font-weight: bold;
+}
+
+.right-radius {
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
 }
 
 .warning {
