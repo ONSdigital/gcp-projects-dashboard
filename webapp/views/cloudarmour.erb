@@ -4,7 +4,7 @@
     <li id="active" class="right-radius">Cloud Armour</li>
   </ul>
 </nav>
-<p><span class="bookmarked-projects"><a href="/bookmarks-cloudarmour">Bookmarked Projects</a></span><span class="note">All times are in UTC. Data updates every 30 minutes.</span></p>
+<p><span class="bookmarked-projects"><a href="/bookmarks-cloudarmour">Bookmarked Projects</a></span><span class="note">Data updates every 30 minutes.</span></p>
 <table>
   <%= partial 'partials/cloudarmour_thead' %>
   <tbody>
@@ -12,7 +12,7 @@
     <tr class="<%= i.even? ? 'even' : 'odd' %>">
       <td><span class="project"><a href="<%= gcp_console_cloud_armour_base_url %><%= h security_rule.document_id %>"><%= h security_rule.document_id %></a></span><br><br><% if bookmarks.include?(security_rule.document_id) %><img id="<%= h security_rule.document_id %>" class="bookmark" src="/svg/bookmark-on.svg" title="Project bookmarked"><% else %><img id="<%= h security_rule.document_id %>" class="bookmark" src="/svg/bookmark-off.svg" title="Bookmark project"><% end %></td>
       <%= partial 'partials/cloudarmour', locals: { policy: policy } %>
-      <td><%= d security_rule.get[:updated] %></td>
+      <td class="date"><%= d security_rule.get[:updated] %></td>
     </tr>
   <% end %> <%# security_rules.each_with_index %>
   </tbody>

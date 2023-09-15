@@ -13,7 +13,7 @@
     <tr class="<%= i.even? ? 'even' : 'odd' %>">
       <td><span class="project"><a href="<%= gcp_console_cloud_armour_base_url %><%= h security_rule.document_id %>"><%= h security_rule.document_id %></a></span></td>
       <%= partial 'partials/cloudarmour', locals: { policy: policy } %>
-      <td><%= d security_rule.get[:updated] %></td>
+      <td class="date"><%= d security_rule.get[:updated] %></td>
     </tr>
   <% end %> <%# security_rules.each_with_index %>
   </tbody>

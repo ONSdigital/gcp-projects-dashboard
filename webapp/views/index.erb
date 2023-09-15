@@ -5,13 +5,13 @@
   </ul>
 </nav>
 <% if projects.any? %>
-<p><span class="bookmarked-projects"><a href="/bookmarks">Bookmarked Projects</a></span><span class="note">All times are in UTC. Data updates every 30 minutes.</span></p>
+<p><span class="bookmarked-projects"><a href="/bookmarks">Bookmarked Projects</a></span><span class="note">Data updates every 30 minutes.</span></p>
 <table>
   <%= partial 'partials/gke_thead' %>
   <tbody>
   <% projects.each_with_index do |project, i| cluster = project.get[:cluster] %>
      <tr class="<%= i.even? ? 'even' : 'odd' %>">
-      <td><span class="project"><a href="<%= gcp_console_base_url %><%= h project.document_id %>"><%= h project.document_id %></a></span><br><br><% if bookmarks.include?(project.document_id) %><img id="<%= h project.document_id %>" class="bookmark" src="/svg/bookmark-on.svg" title="Project bookmarked"><% else %><img id="<%= h project.document_id %>" class="bookmark" src="/svg/bookmark-off.svg" title="Bookmark project"><% end %><br><br><strong>Created</strong><br><%= d cluster.dig(:createTime) %><br><br><strong>Location</strong><br><% if cluster.dig(:location) != 'europe-west2' %><img src="/svg/warning.svg" title="Warning"><%= h cluster.dig(:location) %><% else %>London<% end %></td>
+      <td><span class="project"><a href="<%= gcp_console_base_url %><%= h project.document_id %>"><%= h project.document_id %></a></span><br><br><% if bookmarks.include?(project.document_id) %><img id="<%= h project.document_id %>" class="bookmark" src="/svg/bookmark-on.svg" title="Project bookmarked"><% else %><img id="<%= h project.document_id %>" class="bookmark" src="/svg/bookmark-off.svg" title="Bookmark project"><% end %><br><br><strong>Created</strong><br><span class="date"><%= d cluster.dig(:createTime) %></span><br><br><strong>Location</strong><br><% if cluster.dig(:location) != 'europe-west2' %><img src="/svg/warning.svg" title="Warning"><%= h cluster.dig(:location) %><% else %>London<% end %></td>
       <%= partial 'partials/cluster', locals: { cluster: cluster, project: project, master_version_alerts: master_version_alerts, node_version_alerts: node_version_alerts } %>
     </tr>
   <% end %>
