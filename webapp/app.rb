@@ -18,7 +18,7 @@ set :logging, false # Stop Sinatra logging routes to STDERR.
 
 helpers do
   def d(text)
-    Time.parse(text).utc.strftime('%d/%m/%Y %H:%M')
+    Time.parse(text).utc.strftime('%d %b %Y %H:%M')
   end
 
   def h(text)
