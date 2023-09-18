@@ -2,6 +2,7 @@
 
 require 'sinatra'
 require 'sinatra/partial'
+require 'time'
 
 require_relative 'lib/configuration'
 require_relative 'lib/firestore_client'
