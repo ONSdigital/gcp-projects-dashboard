@@ -11,7 +11,7 @@ $(function() {
     }
   });
 
-  displayDatesInLocalTime();
+  // displayDatesInLocalTime();
 });
 
 function displayDatesInLocalTime() {
