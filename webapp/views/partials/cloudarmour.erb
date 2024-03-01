@@ -4,7 +4,7 @@
   <table class="cloudarmour">
     <thead>
       <tr>
-        <th colspan="4" class="policyname"><%= h item[:name] %> <% if item.key?(:description) %>(<%= h item[:description] %>)<% end %><div class="policycreated"><strong>Created</strong><br><span class="date"><%= d> item.dig(:creationTimestamp) %></span></th>
+        <th colspan="4" class="policyname"><%= h item[:name] %> <% if item.key?(:description) %>(<%= h item[:description] %>)<% end %><div class="policycreated"><strong>Created</strong><br><span class="date"><%= d item.dig(:creationTimestamp) %></span></th>
       </tr>
       <tr>
         <th>Action</th>
