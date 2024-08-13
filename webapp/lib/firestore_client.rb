@@ -19,7 +19,7 @@ class FirestoreClient
     bookmarks = []
     bookmarks = preferences.get[:bookmarks] unless preferences.get.data.nil?
     bookmarks << bookmark unless bookmarks.include?(bookmark)
-    preferences.set({ bookmarks: bookmarks })
+    preferences.set({ bookmarks: })
   end
 
   def all_master_version_alerts
@@ -64,6 +64,6 @@ class FirestoreClient
     bookmarks = []
     bookmarks = preferences.get[:bookmarks] unless preferences.get.data.nil?
     bookmarks&.delete(bookmark)
-    preferences.set({ bookmarks: bookmarks })
+    preferences.set({ bookmarks: })
   end
 end
