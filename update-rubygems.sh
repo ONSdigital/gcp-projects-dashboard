@@ -19,7 +19,7 @@ git commit -m "Updated dependencies"
 git push
 
 echo "Waiting 5 minutes for Cloud Build pipeline to build webapp-parent-image..."
-sleep 5m
+sleep 300
 
 cd ./webapp
 rm Gemfile.lock
