@@ -21,7 +21,7 @@ git push
 echo "Waiting 5 minutes for Cloud Build pipeline to build webapp-parent-image..."
 sleep 300
 
-cd ./webapp
+cd ../webapp
 rm Gemfile.lock
 bundle install
 
