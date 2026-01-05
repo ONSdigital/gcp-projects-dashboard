@@ -1,4 +1,4 @@
-FROM ruby:3.3.2
+FROM ruby:4.0.0
 
 WORKDIR /usr/src/app
 COPY . ./
