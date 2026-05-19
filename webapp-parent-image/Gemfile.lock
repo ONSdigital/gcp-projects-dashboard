@@ -42,7 +42,7 @@ GEM
       gapic-common (>= 0.25.0, < 2.a)
       google-cloud-errors (~> 1.0)
       google-cloud-location (>= 0.7, < 2.a)
-    google-cloud-location (1.3.0)
+    google-cloud-location (1.4.0)
       gapic-common (~> 1.2)
       google-cloud-errors (~> 1.0)
     google-logging-utils (0.2.0)
@@ -115,27 +115,26 @@ GEM
       google-protobuf (>= 3.25, < 5.0)
       googleapis-common-protos-types (~> 1.0)
     json (2.19.5)
-    jwt (3.1.2)
+    jwt (3.2.0)
       base64
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.7.0)
-    multi_json (1.19.1)
-    mustermann (3.0.4)
-      ruby2_keywords (~> 0.0.1)
+    multi_json (1.21.1)
+    mustermann (3.1.1)
     net-http (0.9.1)
       uri (>= 0.11.1)
     nio4r (2.7.5)
     ons-firestore (1.3.1)
       google-cloud-firestore (~> 2.6)
     os (1.1.4)
-    parallel (1.28.0)
+    parallel (2.1.0)
     parser (3.3.11.1)
       ast (~> 2.4.1)
       racc
     prism (1.9.0)
     public_suffix (7.0.5)
-    puma (7.2.0)
+    puma (8.0.1)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.6)
@@ -147,14 +146,14 @@ GEM
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
     rainbow (3.1.1)
-    rake (13.3.1)
+    rake (13.4.2)
     rbtree (0.4.6)
     regexp_parser (2.12.0)
-    rubocop (1.86.0)
+    rubocop (1.86.2)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
-      parallel (~> 1.10)
+      parallel (>= 1.10)
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.9.3, < 3.0)
@@ -165,7 +164,6 @@ GEM
       parser (>= 3.3.7.2)
       prism (~> 1.7)
     ruby-progressbar (1.13.0)
-    ruby2_keywords (0.0.5)
     signet (0.21.0)
       addressable (~> 2.8)
       faraday (>= 0.17.5, < 3.a)
@@ -209,7 +207,6 @@ CHECKSUMS
   ast (2.4.3) sha256=954615157c1d6a382bc27d690d973195e79db7f55e9765ac7c481c60bdb4d383
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   bigdecimal (3.3.1) sha256=eaa01e228be54c4f9f53bf3cc34fe3d5e845c31963e7fcc5bedb05a4e7d52218
-  bundler (4.0.11) sha256=5bcec0fb78302e48d02ee46f10ee6e6942be647ba5b44a6d1ddfda9a240ce785
   concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
   faraday (2.14.2) sha256=73ccb9994a9e8648f010e32eca2ae82e41c57860aa10932cda29418b9e0223ad
   faraday-net_http (3.4.2) sha256=f147758260d3526939bf57ecf911682f94926a3666502e24c69992765875906c
@@ -220,7 +217,7 @@ CHECKSUMS
   google-cloud-errors (1.6.0) sha256=1da8476dd706ad04b9d32e3c4b90d07d3463b37d6407cb56d41342ea7647d0a1
   google-cloud-firestore (2.16.1) sha256=4fab71503402f579497c4e91c290720dfe289265cbea38d28ee93bce6d91f804
   google-cloud-firestore-v1 (1.3.0) sha256=03640b1a16265bcd0a846d06a3807039e3f8e79db88ef098d112b4787d4a08e6
-  google-cloud-location (1.3.0) sha256=3df2153b57eadc8c799a48f301752d37fd04b9e1583e26a06d5d20c1471011da
+  google-cloud-location (1.4.0) sha256=af4e82e7b45a337020ea0674d363c45c083d08c968f12bf6d82d425e2b8843f7
   google-logging-utils (0.2.0) sha256=675462b4ea5affa825a3442694ca2d75d0069455a1d0956127207498fca3df7b
   google-protobuf (4.34.1) sha256=347181542b8d659c60f028fa3791c9cccce651a91ad27782dbc5c5e374796cdc
   google-protobuf (4.34.1-aarch64-linux-gnu) sha256=f9c07607dc139c895f2792a7740fcd01cd94d4d7b0e0a939045b50d7999f0b1d
@@ -244,33 +241,32 @@ CHECKSUMS
   grpc (1.80.0-x86_64-linux-gnu) sha256=25ba8beb5438152fb60656161dc729c1258c6963ec568361f601e19b2fb7ac23
   grpc (1.80.0-x86_64-linux-musl) sha256=15a62e816c690bece9f5fd320a4b61aa735a2390daa8141596672a6e820ff342
   json (2.19.5) sha256=218a18553e4801d579ca7e0f5bc72bafd776d7397238a1fb4e74db5b0a812c59
-  jwt (3.1.2) sha256=af6991f19a6bb4060d618d9add7a66f0eeb005ac0bc017cd01f63b42e122d535
+  jwt (3.2.0) sha256=5419b1fe37b1da0982bd07051f573a8b8789ab724c2aa7e785e4784a3ed217d7
   language_server-protocol (3.17.0.5) sha256=fd1e39a51a28bf3eec959379985a72e296e9f9acfce46f6a79d31ca8760803cc
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
-  multi_json (1.19.1) sha256=7aefeff8f2c854bf739931a238e4aea64592845e0c0395c8a7d2eea7fdd631b7
-  mustermann (3.0.4) sha256=85fadcb6b3c6493a8b511b42426f904b7f27b282835502233dd154daab13aa22
+  multi_json (1.21.1) sha256=e6126a31808e3b4d19f483c775ceac34df190dffa62adfb63a165ee14ba68080
+  mustermann (3.1.1) sha256=4c6170c7234d5499c345562ba7c7dfe73e1754286dcc1abb053064d66a127198
   net-http (0.9.1) sha256=25ba0b67c63e89df626ed8fac771d0ad24ad151a858af2cc8e6a716ca4336996
   nio4r (2.7.5) sha256=6c90168e48fb5f8e768419c93abb94ba2b892a1d0602cb06eef16d8b7df1dca1
   ons-firestore (1.3.1) sha256=97dae88e1d1177b873cfa9aa1a3d59f1dc4d4496eb7dc91a04bd1cef02116b8d
   os (1.1.4) sha256=57816d6a334e7bd6aed048f4b0308226c5fb027433b67d90a9ab435f35108d3f
-  parallel (1.28.0) sha256=33e6de1484baf2524792d178b0913fc8eb94c628d6cfe45599ad4458c638c970
+  parallel (2.1.0) sha256=b35258865c2e31134c5ecb708beaaf6772adf9d5efae28e93e99260877b09356
   parser (3.3.11.1) sha256=d17ace7aabe3e72c3cc94043714be27cc6f852f104d81aa284c2281aecc65d54
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
-  puma (7.2.0) sha256=bf8ef4ab514a4e6d4554cb4326b2004eba5036ae05cf765cfe51aba9706a72a8
+  puma (8.0.1) sha256=7b94e50c07655718c1fb8ae41a11fc06c7d61293208b3aa608ff71a46d3ad37c
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
   rack (3.2.6) sha256=5ed78e1f73b2e25679bec7d45ee2d4483cc4146eb1be0264fc4d94cb5ef212c2
   rack-protection (4.2.1) sha256=cf6e2842df8c55f5e4d1a4be015e603e19e9bc3a7178bae58949ccbb58558bac
   rack-session (2.1.2) sha256=595434f8c0c3473ae7d7ac56ecda6cc6dfd9d37c0b2b5255330aa1576967ffe8
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
-  rake (13.3.1) sha256=8c9e89d09f66a26a01264e7e3480ec0607f0c497a861ef16063604b1b08eb19c
+  rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
   rbtree (0.4.6) sha256=14eea4469b24fd2472542e5f3eb105d6344c8ccf36f0b56d55fdcfeb4e0f10fc
   regexp_parser (2.12.0) sha256=35a916a1d63190ab5c9009457136ae5f3c0c7512d60291d0d1378ba18ce08ebb
-  rubocop (1.86.0) sha256=4ff1186fe16ebe9baff5e7aad66bb0ad4cabf5cdcd419f773146dbba2565d186
+  rubocop (1.86.2) sha256=bb2e97f635eda42c448f2588f4a6ff78f221b8bdfdf65b1e9b07fbd57521b45d
   rubocop-ast (1.49.1) sha256=4412f3ee70f6fe4546cc489548e0f6fcf76cafcfa80fa03af67098ffed755035
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
-  ruby2_keywords (0.0.5) sha256=ffd13740c573b7301cf7a2e61fc857b2a8e3d3aff32545d6f8300d8bae10e3ef
   signet (0.21.0) sha256=d617e9fbf24928280d39dcfefba9a0372d1c38187ffffd0a9283957a10a8cd5b
   sinatra (4.2.1) sha256=b7aeb9b11d046b552972ade834f1f9be98b185fa8444480688e3627625377080
   sinatra-partial (1.0.1) sha256=205ac4dfd3d427c88ec21b72ac49b3d38f03c599a1d81be60881178fb5b79f3f
